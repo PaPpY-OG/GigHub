@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Freelancer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin: 30px auto;
+            max-width: 900px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .summary ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ user.username |first | upper }} </h1>
+        <nav>
+            <a href="{% url 'Fprofile_page' %}">Profile</a>
+            <a href="{% url 'active_gigs' %}">Active Gigs</a>
+            <a href="{% url 'my_bids' %}">My Bids</a>
+            <a href="{% url 'freelancer_orders' %}">Orders</a>
+            <a href="{% url 'active_gigs' %}">Message</a>
+            <a href="{% url 'freelancer_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <section class="summary">
+        <h2>Dashboard Summary</h2>
+        <ul>
+             <li>Total Orders Taken: {{ total_orders }}</li>
+        </ul>
+    </section>
+</body>
+</html>

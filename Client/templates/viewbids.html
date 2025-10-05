@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>View Bids</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .gig-summary {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .gig-summary p {
+            margin: 5px 0;
+            font-size: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status.pending {
+            color: orange;
+        }
+
+        .status.accepted {
+            color: green;
+        }
+
+        .status.rejected {
+            color: red;
+        }
+
+        .actions a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        .empty {
+            text-align: center;
+            color: gray;
+            padding: 20px;
+        }
+
+        .back_button {
+            display: block;
+            width: fit-content;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #0977c0;
+            color: white;
+            border-radius: 17px;
+            font-weight: 500;
+            font-size: 15px;
+            text-decoration: none;
+            border: none;
+            margin: 30px auto 0;
+            cursor: pointer;
+        }
+
+        .back_button:hover {
+            background-color: #2991e7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'client_dash' %}">Dashboard</a>
+            <a href="{% url 'profile_page' %}">Profile</a>
+            <a href="{% url 'createGig' %}">Post New Gig</a>
+            <a href="{% url 'viewGig' %}">My Gigs</a>
+            <a href="{% url 'client_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Bids for "{{ gig.title }}"</h2>
+
+        <div class="gig-summary">
+            <p><strong>Category:</strong> {{ gig.category }}</p>
+            <p><strong>Budget:</strong> ${{ gig.budget_min }} - ${{ gig.budget_max }}</p>
+            <p><strong>Description:</strong> {{ gig.description }}</p>
+            <p><strong>Status:</strong> {% if gig.closed %}<span style="color: red;">Closed</span>{% else %}<span style="color: #0977c0;">Open</span>{% endif %}</p>
+            <p><strong>Posted on:</strong> {{ gig.created_at|date:"M d, Y" }}</p>
+        </div>
+
+        {% if bids %}
+        <table>
+            <tr>
+                <th>Freelancer</th>
+                <th>Amount</th>
+                <th>Days</th>
+                <th>Cover Letter</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for bid in bids %}
+            <tr>
+                <td><a href="{% url 'Fprofile_page' %}">{{ bid.freelancer.username }}</a></td>
+                <td>${{ bid.amount }}</td>
+                <td>{{ bid.days }} days</td>
+                <td>{{ bid.cover_letter|truncatechars:100 }}</td>
+                <td class="status {{ bid.status|lower }}">{{ bid.status }}</td>
+                <td class="actions">
+                    {% if bid.status == "PENDING" %}
+                        <a href="{% url 'accept_bid' bid.id %}">Accept</a>
+                        <a href="{% url 'reject_bid' bid.id %}">Reject</a>
+                    {% else %}
+                        <span style="color: gray;">Already Assigned</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <div class="empty">No bids received yet for this gig.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

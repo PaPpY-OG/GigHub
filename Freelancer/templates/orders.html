@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin: 30px auto;
+            max-width: 900px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .order-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background-color: #fafafa;
+        }
+
+        .order-card h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .order-card p {
+            margin: 5px 0;
+        }
+
+        .order-card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .order-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'freelancer_dash' %}">Dashboard</a>
+            <a href="{% url 'Fprofile_page' %}">Profile</a>
+            <a href="{% url 'active_gigs' %}">Active Gigs</a>
+            <a href="{% url 'my_bids' %}">My Bids</a>
+            <a href="{% url 'active_gigs' %}">Message</a>
+            <a href="{% url 'freelancer_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <section class="orders">
+        <h2>My Orders</h2>
+        {% for bid in orders %}
+            <div class="order-card">
+                <h3>{{ bid.gig.title }}</h3>
+                <p><strong>Client:</strong> {{ bid.gig.client.username }}</p>
+                <p><strong>Amount:</strong> ${{ bid.amount }}</p>
+                <p><strong>Delivery Time:</strong> {{ bid.days }} days</p>
+                <p><strong>Status:</strong> {{ bid.status }}</p>
+                <a href="/car.jpeg">View Gig Details</a>
+            </div>
+        {% empty %}
+            <p>You have no active orders yet.</p>
+        {% endfor %}
+    </section>
+</body>
+</html>

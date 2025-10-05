@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Active Gigs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .message.success {
+            color: green;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status.open {
+            color: #0977c0;
+        }
+
+        .status.closed {
+            color: red;
+        }
+
+        .bid_btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .bid_btn:hover {
+            background-color: #2991e7;
+        }
+
+        .empty {
+            text-align: center;
+            color: gray;
+            padding: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            table th, table td {
+                white-space: nowrap;
+            }
+
+            nav a {
+                display: block;
+                margin: 10px 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'freelancer_dash' %}">Dashboard</a>
+            <a href="{% url 'Fprofile_page' %}">Profile</a>
+            <a href="{% url 'my_bids' %}">My Bids</a>
+            <a href="{% url 'freelancer_orders' %}">Orders</a>
+            <a href="{% url 'active_gigs' %}">Message</a>
+            <a href="{% url 'freelancer_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% if success %}
+            <div class="message success">{{ success }}</div>
+        {% endif %}
+
+        <h2>Active Gigs</h2>
+
+        {% if gigs %}
+        <div class="table-responsive">
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Budget</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for gig in gigs %}
+                <tr>
+                    <td>{{ gig.title }}</td>
+                    <td>{{ gig.category }}</td>
+                    <td>${{ gig.budget_min }} - ${{ gig.budget_max }}</td>
+                    <td>{{ gig.description }}</td>
+                    <td class="status {% if gig.closed %}closed{% else %}open{% endif %}">
+                        {% if gig.closed %}Closed{% else %}Open{% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'submit_bid' gig.id %}" class="bid_btn">Bid</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+            <div class="empty">No gigs found. Check back later.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin: 30px auto;
+            max-width: 900px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .summary ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bid-card{
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background-color: #fafafa;
+        }
+
+        .bid-card h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .bid-card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .bid-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ user.username |first | upper }} </h1>
+        <nav>
+            <a href="{% url 'profile_page' %}">Profile</a>
+            <a href="{% url 'createGig' %}">Post New Gig</a>
+            <a href="{% url 'viewGig' %}">My Gigs</a>
+            <a href="{% url 'viewGig' %}">Message</a>
+            <a href="{% url 'viewGig' %}">Review</a>
+            <a href="{% url 'client_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <section class="summary">
+        <h2>Dashboard Summary</h2>
+        <ul>
+             <li>Total Gigs Posted: {{ total_gigs }}</li>
+        </ul>
+    </section>
+
+    <section class="recent-bids">
+        <h2>Recent Bids on Your Gigs</h2>
+        {% for bid in recent_bids %}
+            <div class="bid-card">
+                <h3>{{ bid.gig.title }}</h3>
+                <p>Freelancer: {{ bid.freelancer.username }}</p>
+                <p>Amount: ${{ bid.amount }}</p>
+                <p>Days: {{ bid.days }}</p>
+                <a href="{% url 'view_bids_for_gig' bid.gig.id %}">View Bid</a>
+            </div>
+        {% empty %}
+            <p>No recent bids.</p>
+        {% endfor %}
+    </section>
+</body>
+</html>

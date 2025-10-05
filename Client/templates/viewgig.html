@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>View Gigs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status.open {
+            color: #0977c0;
+        }
+
+        .status.closed {
+            color: red;
+        }
+
+        .empty {
+            text-align: center;
+            color: gray;
+            padding: 20px;
+        }
+
+        .back_button {
+            display: block;
+            width: fit-content;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #0977c0;
+            color: white;
+            border-radius: 17px;
+            font-weight: 500;
+            font-size: 15px;
+            text-decoration: none;
+            border: none;
+            margin: 30px auto 0;
+            cursor: pointer;
+        }
+
+        .back_button:hover {
+            background-color: #2991e7;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            table th, table td {
+                white-space: nowrap;
+            }
+
+            nav a {
+                display: block;
+                margin: 10px 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Gigs</h1>
+        <nav>
+            <a href="{% url 'client_dash' %}">Dashboard</a>
+            <a href="{% url 'profile_page' %}">Profile</a>
+            <a href="{% url 'createGig' %}">Post New Gig</a>
+            <a href="{% url 'viewGig' %}">Message</a>
+            <a href="{% url 'viewGig' %}">Review</a>
+            <a href="{% url 'client_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% if gigs %}
+        <div class="table-responsive">
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Budget</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+                {% for gig in gigs %}
+                <tr>
+                    <td>{{ gig.title }}</td>
+                    <td>{{ gig.category }}</td>
+                    <td>${{ gig.budget_min }} - ${{ gig.budget_max }}</td>
+                    <td>{{ gig.description }}</td>
+                    <td class="status {% if gig.closed %}closed{% else %}open{% endif %}">
+                       <p>{{ gig.get_status_display }}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+            <div class="empty">You haven't posted any gigs yet.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>My Bids</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status.pending {
+            color: orange;
+        }
+
+        .status.accepted {
+            color: green;
+        }
+
+        .status.rejected {
+            color: red;
+        }
+
+        .actions a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            table th, table td {
+                white-space: nowrap;
+            }
+
+            nav a {
+                display: block;
+                margin: 10px 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'freelancer_dash' %}">Dashboard</a>
+            <a href="{% url 'Fprofile_page' %}">Profile</a>
+            <a href="{% url 'active_gigs' %}">Active Gigs</a>
+            <a href="{% url 'freelancer_orders' %}">Orders</a>
+            <a href="{% url 'active_gigs' %}">Message</a>
+            <a href="{% url 'freelancer_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Your Submitted Bids</h2>
+
+        {% if bids %}
+        <div class="table-responsive">
+            <table>
+                <tr>
+                    <th>Gig Title</th>
+                    <th>Amount</th>
+                    <th>Days</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                {% for bid in bids %}
+                <tr>
+                    <td>{{ bid.gig.title }}</td>
+                    <td>${{ bid.amount }}</td>
+                    <td>{{ bid.days }} days</td>
+                    <td class="status {{ bid.status|lower }}">{{ bid.status }}</td>
+                    <td>{{ bid.created_at|date:"M d, Y" }}</td>
+                    <td class="actions">
+                        {% if bid.status == "PENDING" %}
+                            <a href="#">Edit</a>
+                            <a href="#">Withdraw</a>
+                        {% else %}
+                            <span style="color: gray;">Already Assigned</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+            <p style="text-align: center; color: gray;">You haven't placed any bids yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

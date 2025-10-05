@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Freelancer's Profile</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --secondary: #f4f4f4;
+            --text: #333;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--secondary);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .profile-photo {
+            width: 130px;
+            height: 130px;
+            /* border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary); */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            background-color: #ffeeba;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            color: #856404;
+        }
+
+        .profile-info p {
+            margin: 8px 0;
+            color: var(--text);
+        }
+
+        .edit-button {
+            margin-top: 20px;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Profile</h1>
+        <nav>
+            <a href="{% url 'freelancer_dash' %}">Dashboard</a>
+            <a href="{% url 'active_gigs' %}">Active Gigs</a>
+            <a href="{% url 'my_bids' %}">My Bids</a>
+            <a href="{% url 'freelancer_orders' %}">Orders</a>
+            <a href="{% url 'active_gigs' %}">Message</a>
+            <a href="{% url 'freelancer_logout' %}">Logout</a>
+        </nav>
+    </header><br>
+    <div class="container">
+        {% if is_complete %}
+            <h2>{{ profile.user.get_full_name|default:profile.user.username }}</h2>
+            {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" alt="Profile Photo" class="profile-photo">
+            {% else %}
+                <img src="/car.jpeg" alt="Default Photo" class="profile-photo">
+            {% endif %}
+            <div class="profile-info">
+                <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
+                <p><strong>Bio:</strong> {{ profile.bio }}</p>
+            </div>
+            <div class="edit-button">
+                <a href="{% url 'edit_profile' %}"><button>Edit Profile</button></a>
+            </div>
+        {% else %}
+            <div class="alert">
+                <strong>Heads up!</strong> Your profile is incomplete. Fill in your details below.
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select name="role" id="role" required>
+                        <option value="">Select Role</option>
+                        <option value="CLIENT" {% if profile.role == 'CLIENT' %}selected{% endif %}>Client</option>
+                        <option value="FREELANCER" {% if profile.role == 'FREELANCER' %}selected{% endif %}>Freelancer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea name="bio" id="bio" rows="4" required>{{ profile.bio }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Profile Photo</label>
+                    <input type="file" name="photo" id="photo">
+                </div>
+                <button type="submit">Save Profile</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
