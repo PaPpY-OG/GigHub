@@ -83,7 +83,12 @@
         .status.closed {
             color: red;
         }
-
+        .actions a {
+            color: #0977c0;
+            font-weight: bold;
+            text-decoration: none;
+            margin-right: 10px;
+        }
         .empty {
             text-align: center;
             color: gray;
@@ -151,6 +156,7 @@
                     <th>Budget</th>
                     <th>Description</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
                 {% for gig in gigs %}
                 <tr>
@@ -160,6 +166,9 @@
                     <td>{{ gig.description }}</td>
                     <td class="status {% if gig.closed %}closed{% else %}open{% endif %}">
                        <p>{{ gig.get_status_display }}</p>
+                    </td>
+                    <td class="actions"><a href=>Edit</a>
+                    <a href=>Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
