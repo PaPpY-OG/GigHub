@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Client's Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
             --primary: #007bff;
@@ -35,9 +36,6 @@
         .profile-photo {
             width: 130px;
             height: 130px;
-            /* border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary); */
             margin-bottom: 20px;
         }
 
@@ -97,6 +95,7 @@
         .edit-button {
             margin-top: 20px;
         }
+
         header {
             background-color: #007bff;
             color: white;
@@ -111,17 +110,69 @@
 
         nav {
             margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         nav a {
             color: white;
-            margin: 0 15px;
+            margin: 5px 10px;
             text-decoration: none;
             font-weight: bold;
+            font-size: 14px;
         }
 
         nav a:hover {
             text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            nav a {
+                font-size: 12px;
+                margin: 5px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .profile-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+
+            .alert {
+                font-size: 14px;
+            }
+
+            .profile-info p {
+                font-size: 14px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input[type="text"],
+            textarea,
+            select {
+                font-size: 14px;
+            }
         }
     </style>
 </head>

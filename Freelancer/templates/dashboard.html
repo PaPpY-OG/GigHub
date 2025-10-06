@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Freelancer Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,18 +22,22 @@
 
         header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 24px;
         }
 
         nav {
             margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         nav a {
             color: white;
-            margin: 0 15px;
+            margin: 5px 10px;
             text-decoration: none;
             font-weight: bold;
+            font-size: 14px;
         }
 
         nav a:hover {
@@ -40,10 +45,10 @@
         }
 
         section {
-            margin: 30px auto;
-            max-width: 900px;
+            margin: 20px auto;
+            max-width: 90%;
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
@@ -51,6 +56,7 @@
         section h2 {
             margin-top: 0;
             color: #007bff;
+            font-size: 20px;
         }
 
         .summary ul {
@@ -61,6 +67,30 @@
         .summary li {
             padding: 8px 0;
             border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 20px;
+            }
+
+            nav a {
+                font-size: 12px;
+                margin: 5px;
+            }
+
+            section {
+                padding: 10px;
+            }
+
+            section h2 {
+                font-size: 18px;
+            }
+
+            .summary li {
+                font-size: 14px;
+            }
         }
     </style>
 </head>

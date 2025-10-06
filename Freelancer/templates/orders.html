@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,13 +27,17 @@
 
         nav {
             margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         nav a {
             color: white;
-            margin: 0 15px;
+            margin: 5px 10px;
             text-decoration: none;
             font-weight: bold;
+            font-size: 14px;
         }
 
         nav a:hover {
@@ -80,6 +85,42 @@
         .order-card a:hover {
             text-decoration: underline;
         }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 22px;
+            }
+
+            nav a {
+                font-size: 12px;
+                margin: 5px;
+            }
+
+            section {
+                padding: 15px;
+                margin: 20px auto;
+            }
+
+            section h2 {
+                font-size: 20px;
+            }
+
+            .order-card {
+                padding: 12px;
+            }
+
+            .order-card h3 {
+                font-size: 18px;
+            }
+
+            .order-card p {
+                font-size: 14px;
+            }
+
+            .order-card a {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -103,7 +144,7 @@
                 <p><strong>Amount:</strong> ${{ bid.amount }}</p>
                 <p><strong>Delivery Time:</strong> {{ bid.days }} days</p>
                 <p><strong>Status:</strong> {{ bid.status }}</p>
-                <a href="/car.jpeg">View Gig Details</a>
+                <a href=>View Gig Details</a>
             </div>
         {% empty %}
             <p>You have no active orders yet.</p>
