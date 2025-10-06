@@ -164,7 +164,7 @@ def delete_gig(request, gig_id):
 @login_required(login_url='clientloginPage')
 def start_conversation(request, bid_id):
     bid = get_object_or_404(Bid, id=bid_id)
-    convo, created = Conversation.objects.get_or_create(client = bid.client, freelancer = bid.freelancer)
+    convo, created = Conversation.objects.get_or_create(client = bid.gig.client, freelancer = bid.freelancer)
     return redirect('conversation', convo.id)
 
 @login_required(login_url='clientloginPage')
