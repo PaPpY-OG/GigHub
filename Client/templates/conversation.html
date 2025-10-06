@@ -140,7 +140,12 @@
     </header>
 
     <div class="container">
-        <h2>Chat with {{ convo.client.username if request.user == convo.freelancer else convo.freelancer.username }}</h2>
+        <h2>Chat with {% if request.user == convo.freelancer %}
+            {{ convo.client.username }}
+        {% else %}
+            {{ convo.freelancer.username }}
+        {% endif %}
+        </h2>
 
         <div class="chat-box">
             {% for msg in messages %}
