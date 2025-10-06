@@ -167,8 +167,13 @@
                     <td class="status {% if gig.closed %}closed{% else %}open{% endif %}">
                        <p>{{ gig.get_status_display }}</p>
                     </td>
-                    <td class="actions"><a href=>Edit</a>
-                    <a href="{% url 'delete_gig' gig.id %}" style="color: red;">Delete</a>
+                    <td class="actions">
+                        {% if gig.status == "Open" %}
+                        <a href=>Edit</a>
+                        <a href="{% url 'delete_gig' gig.id %}" style="color: red;">Delete</a>
+                        {% else %}
+                        <span style="color: gray;">Already Assigned</span>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

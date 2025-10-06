@@ -16,5 +16,6 @@ urlpatterns = [
     path('delete_gig/<int:gig_id>/', views.delete_gig, name="delete_gig"),
     path('start_conversation/<int:bid_id>/', views.start_conversation, name="start_conversation"),
     path('conversation/<int:convo_id>/', views.conversation, name="conversation"),
+    path('client/inbox/', views.inbox_view, name="inbox_view"),
     path('client/logout/', views.clientlogout, name="client_logout")
 ]

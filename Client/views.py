@@ -181,6 +181,11 @@ def conversation(request, convo_id):
     messages = convo.message_set.order_by('sent_at')
     return render(request, 'conversation.html', {'convo': convo, 'messages': messages})
 
+@login_required(login_url='clientloginPage')
+def inbox_view(request):
+    conversations = Conversation.objects.filter(client=request.user).order_by('-updated_at')
+    return render(request, 'inbox.html', {'conversations': conversations})
+
 
 @login_required(login_url='clientloginPage')
 def clientlogout(request: HttpRequest):

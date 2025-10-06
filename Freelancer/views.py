@@ -161,6 +161,11 @@ def messages(request, convo_id):
     return render(request, 'messages.html', {'convo': convo, 'messages': messages})
 
 @login_required(login_url='freelancerloginPage')
+def inbox_view(request):
+    conversations = Conversation.objects.filter(freelancer=request.user).order_by('-updated_at')
+    return render(request, 'inbox.html', {'conversations': conversations})
+
+@login_required(login_url='freelancerloginPage')
 def freelancerLogout(request: HttpRequest):
     logout(request)
     return render (request, 'login4.html')

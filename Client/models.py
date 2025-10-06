@@ -65,6 +65,8 @@ class Conversation(models.Model):
     client = models.ForeignKey(User, related_name='client_conversations', on_delete=models.CASCADE)
     freelancer = models.ForeignKey(User, related_name='freelancer_conversations', on_delete=models.CASCADE)
     started_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Message(models.Model):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
