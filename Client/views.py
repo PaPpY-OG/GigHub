@@ -155,10 +155,10 @@ def reject_bid(request, bid_id):
     return redirect('view_bids_for_gig', gig_id=bid.gig.id)
 
 @login_required(login_url='clientloginPage')
-def delete_bid(request, bid_id):
-    bid = get_object_or_404(Bid, id=bid_id, gig__client=request.user)
-    bid.delete()
-    return redirect('view_bids_for_gig', gig_id=bid.gig.id)
+def delete_gig(request, gig_id):
+    gig = get_object_or_404(Gig, id=gig_id, client=request.user)
+    gig.delete()
+    return redirect('viewGig')
 
 @login_required(login_url='clientloginPage')
 def clientlogout(request: HttpRequest):

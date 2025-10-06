@@ -124,6 +124,17 @@ def my_bids(request: HttpRequest):
     return render(request, 'mybids.html', {'bids': bids})
 
 @login_required(login_url='freelancerloginPage')
+def withdraw_bid(request, bid_id):
+    bid = get_object_or_404(Bid, id=bid_id, freelancer=request.user)
+    bid.delete()
+    # Also remove from session if present
+    mybids = request.session.get('mybids', [])
+    if bid.gig.id in mybids:
+        mybids.remove(bid.gig.id)
+        request.session['mybids'] = mybids
+    return redirect('my_bids')
+
+@login_required(login_url='freelancerloginPage')
 def freelancerOrders(request):
     orders = Bid.objects.filter(freelancer=request.user, status='ACCEPTED').select_related('gig')
     return render(request, 'orders.html', {'orders': orders})

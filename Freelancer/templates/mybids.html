@@ -152,7 +152,7 @@
                     <td class="actions">
                         {% if bid.status == "PENDING" %}
                             <a href="#">Edit</a>
-                            <a href="#">Withdraw</a>
+                            <a href="{% url 'withdraw_bid' bid.id %}">Withdraw</a>
                         {% else %}
                             <span style="color: gray;">Already Assigned</span>
                         {% endif %}
