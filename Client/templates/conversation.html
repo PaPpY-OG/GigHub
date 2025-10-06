@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Conversation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .sent {
+            background-color: #dcf8c6;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .received {
+            background-color: #f0f0f0;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .chat-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-form textarea {
+            flex: 1;
+            resize: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .chat-form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px;
+                height: auto;
+            }
+
+            nav a {
+                display: block;
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .chat-form {
+                flex-direction: column;
+            }
+
+            .chat-form button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'client_dash' %}">Dashboard</a>
+            <a href="{% url 'profile_page' %}">Profile</a>
+            <a href="{% url 'createGig' %}">Post New Gig</a>
+            <a href="{% url 'viewGig' %}">My Gigs</a>
+            <a href="{% url 'conversation' %}">Message</a>
+            <a href="{% url 'viewGig' %}">Review</a>
+            <a href="{% url 'client_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Chat with {{ convo.client.username if request.user == convo.freelancer else convo.freelancer.username }}</h2>
+
+        <div class="chat-box">
+            {% for msg in messages %}
+                <div class="message {% if msg.sender == request.user %}sent{% else %}received{% endif %}">
+                    <strong>{{ msg.sender.username }}</strong><br>
+                    {{ msg.text }}<br>
+                    <small>{{ msg.sent_at|date:"M d, H:i" }}</small>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" class="chat-form">
+            {% csrf_token %}
+            <textarea name="text" rows="2" placeholder="Type your message..." required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>

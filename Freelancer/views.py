@@ -3,7 +3,8 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from Client.models import Profile, Order, Bid, Gig
+from Client.models import Profile, Order, Bid, Gig, Conversation, Message
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 
@@ -138,6 +139,26 @@ def withdraw_bid(request, bid_id):
 def freelancerOrders(request):
     orders = Bid.objects.filter(freelancer=request.user, status='ACCEPTED').select_related('gig')
     return render(request, 'orders.html', {'orders': orders})
+
+@login_required(login_url='freelancerloginPage')
+def start_convo(request, bid_id):
+    bid = get_object_or_404(Bid, id=bid_id)
+    convo, created = Conversation.objects.get_or_create(client = bid.client, freelancer = bid.freelancer)
+    return redirect('messages', convo.id)
+
+@login_required(login_url='freelancerloginPage')
+def messages(request, convo_id):
+    convo = get_object_or_404(Conversation, id=convo_id)
+    
+    if request.user not in [convo.client, convo.freelancer]:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        Message.objects.create(conversation=convo,sender=request.user,text=request.POST['text'])
+        return redirect('messages', convo.id)
+
+    messages = convo.message_set.order_by('sent_at')
+    return render(request, 'messages.html', {'convo': convo, 'messages': messages})
 
 @login_required(login_url='freelancerloginPage')
 def freelancerLogout(request: HttpRequest):

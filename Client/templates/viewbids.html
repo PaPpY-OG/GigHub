@@ -140,6 +140,8 @@
             <a href="{% url 'profile_page' %}">Profile</a>
             <a href="{% url 'createGig' %}">Post New Gig</a>
             <a href="{% url 'viewGig' %}">My Gigs</a>
+            <a href="{% url 'conversation' %}">Messages</a>
+            <a href="{% url 'viewGig' %}">Reviews</a>
             <a href="{% url 'client_logout' %}">Logout</a>
         </nav>
     </header>
@@ -177,7 +179,7 @@
                         <a href="{% url 'accept_bid' bid.id %}">Accept</a>
                         <a href="{% url 'reject_bid' bid.id %}">Reject</a>
                     {% elif bid.status == "ACCEPTED" %}
-                        <a href="#">Message</a>
+                        <a href="{% url 'start_conversation' bid.id %}">Message</a>
                     {% else %}
                         <span style="color: gray;">Already Assigned</span>
                     {% endif %}
