@@ -176,6 +176,8 @@
                     {% if bid.status == "PENDING" %}
                         <a href="{% url 'accept_bid' bid.id %}">Accept</a>
                         <a href="{% url 'reject_bid' bid.id %}">Reject</a>
+                    {% elif bid.status == "ACCEPTED" %}
+                        <a href="#">Message</a>
                     {% else %}
                         <span style="color: gray;">Already Assigned</span>
                     {% endif %}
