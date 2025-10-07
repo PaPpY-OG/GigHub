@@ -108,7 +108,7 @@ def submit_bid(request: HttpRequest, gig_id):
             error = "All fields are required."
             return render(request, 'submit_bid.html', {"error": error, "gig": gig})
         
-        if Bid.objects.filter(freelancer=request.user, gig=gig).exists() or gig_id in mybids:
+        if Bid.objects.filter(gig=gig, freelancer=request.user, status='PENDING').exists():
             error = 'You have already placed a bid on this gig.'
             return render(request, 'submit_bid.html', {"error": error, "gig": gig})
         else:
