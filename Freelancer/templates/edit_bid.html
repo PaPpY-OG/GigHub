@@ -143,7 +143,7 @@
             <input class="input" type="number" id="days" name="days" value="{{ bid.days }}" required>
 
             <label class="label">Cover Letter:</label><br>
-            <textarea name="cover_letter" rows="5" cols="40" required></textarea>{{ bid.cover_letter }}<br>
+            <textarea name="cover_letter" rows="5" cols="40" required>{{ bid.cover_letter|escape }}</textarea><br>
 
             <input class="submit" type="submit" value="Update Bid">
         </form>
