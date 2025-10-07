@@ -116,7 +116,6 @@
             <a href="{% url 'active_gigs' %}">Active Gigs</a>
             <a href="{% url 'my_bids' %}">My Bids</a>
             <a href="{% url 'freelancer_orders' %}">Orders</a>
-            <a href="{% url 'inbox_view' %}">Message</a>
             <a href="{% url 'freelancer_logout' %}">Logout</a>
         </nav>
     </header>
@@ -127,10 +126,10 @@
         {% for convo in conversations %}
             <div class="conversation-card">
                 <div class="conversation-info">
-                    <strong>{{ convo.freelancer.username }}</strong><br>
+                    <strong>{{ convo.client.username }}</strong><br>
                     <small>Started: {{ convo.started_at|date:"M d, Y" }}</small>
                 </div>
-                <a href="{% url 'conversation' convo.id %}" class="view-button">View</a>
+                <a href="{% url 'conversations' convo.id %}" class="view-button">View</a>
             </div>
         {% empty %}
             <p class="empty-message">You have no active conversations yet.</p>

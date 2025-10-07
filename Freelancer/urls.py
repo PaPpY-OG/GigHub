@@ -12,7 +12,7 @@ urlpatterns = [
     path('freelancer/bids/', views.my_bids, name='my_bids'),
     path('withdraw_bid/<int:bid_id>/', views.withdraw_bid, name='withdraw_bid'),
     path('freelancer/start_convo/<int:bid_id>/', views.start_convo, name='start_convo'),
-    path('freelancer/messages/<int:convo_id>/', views.messages, name='messages'),
-    path('freelancer/inbox/', views.inbox_view, name='inbox_view'),
+    path('freelancer/conversations/<int:convo_id>/', views.conversations, name='conversations'),
+    path('freelancer/inbox/', views.message_view, name='message_view'),
     path('freelancer/orders/', views.freelancerOrders, name='freelancer_orders')
 ]

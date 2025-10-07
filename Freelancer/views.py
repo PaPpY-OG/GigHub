@@ -145,10 +145,10 @@ def freelancerOrders(request):
 def start_convo(request, bid_id):
     bid = get_object_or_404(Bid, id=bid_id)
     convo, created = Conversation.objects.get_or_create(client = bid.gig.client, freelancer = bid.freelancer)
-    return redirect('messages', convo.id)
+    return redirect('conversations', convo.id)
 
 @login_required(login_url='freelancerloginPage')
-def messages(request, convo_id):
+def conversations(request, convo_id):
     convo = get_object_or_404(Conversation, id=convo_id)
     
     if request.user not in [convo.client, convo.freelancer]:
@@ -156,15 +156,15 @@ def messages(request, convo_id):
 
     if request.method == 'POST':
         Message.objects.create(conversation=convo,sender=request.user,text=request.POST['text'])
-        return redirect('messages', convo.id)
+        return redirect('conversations', convo.id)
 
     messages = convo.message_set.order_by('sent_at')
-    return render(request, 'messages.html', {'convo': convo, 'messages': messages})
+    return render(request, 'conversations.html', {'convo': convo, 'messages': messages})
 
 @login_required(login_url='freelancerloginPage')
-def inbox_view(request):
+def message_view(request):
     conversations = Conversation.objects.filter(Q(client=request.user) | Q(freelancer=request.user)).order_by('-updated_at')
-    return render(request, 'inbox.html', {'conversations': conversations})
+    return render(request, 'message.html', {'conversations': conversations})
 
 @login_required(login_url='freelancerloginPage')
 def freelancerLogout(request: HttpRequest):
