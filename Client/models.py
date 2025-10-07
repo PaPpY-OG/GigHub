@@ -44,6 +44,7 @@ class Bid(models.Model):
     
 class Order(models.Model):
     gig = models.ForeignKey(Gig, on_delete=models.CASCADE)
+    bid = models.ForeignKey(Bid, on_delete=models.CASCADE)
     freelancer = models.ForeignKey(User, on_delete=models.CASCADE)
     agreed_amount = models.DecimalField(max_digits=10, decimal_places=2)
     milestones = models.JSONField(blank=True)  # List of milestones with details
