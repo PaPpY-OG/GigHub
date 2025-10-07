@@ -150,7 +150,7 @@ def withdraw_bid(request, bid_id):
 
 @login_required(login_url='freelancerloginPage')
 def freelancerOrders(request):
-    orders = Bid.objects.filter(freelancer=request.user, status='ACCEPTED').select_related('gig')
+    orders = Order.objects.filter(freelancer=request.user).select_related('gig')
     return render(request, 'orders.html', {'orders': orders})
 
 @login_required(login_url='freelancerloginPage')

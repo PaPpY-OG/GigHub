@@ -142,17 +142,15 @@
                 <h3>{{ order.gig.title }}</h3>
                 <p><strong>Client:</strong> {{ order.gig.client.username }}</p>
                 <p><strong>Amount:</strong> ${{ order.agreed_amount }}</p>
-                <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
+                <p><strong>Delivery Time:</strong> {{ order.delivery_days }} days</p>
                 <p><strong>Status:</strong> {{ order.status }}</p>
 
                 {% if order.status == 'IN_PROGRESS' %}
-                    <form method="POST" action="#">
+                    <form method="POST" action="{% url 'mark_delivered' order.id %}">
                         {% csrf_token %}
                         <button type="submit">Mark as Delivered</button>
                     </form>
                 {% endif %}
-
-            <a href="#">View Gig Details</a>
             </div>
         {% empty %}
             <p>You have no active orders yet.</p>
