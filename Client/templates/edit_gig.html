@@ -137,19 +137,19 @@
             {% csrf_token %}
 
             <label class="label" for="title">Title:</label>
-            <input class="input" type="text" id="title" name="title" required>
+            <input class="input" type="text" id="title" name="title" value="{{ gig.title }}" required>
 
             <label class="label" for="category">Category:</label>
-            <input class="input" type="text" id="category" name="category">
+            <input class="input" type="text" id="category" value="{{ gig.category }}" name="category">
 
             <label class="label" for="budget_min">Budget Min:</label>
-            <input class="input" type="number" id="budget_min" name="budget_min" required>
+            <input class="input" type="number" id="budget_min" name="budget_min" value="{{ gig.budget_min }}" required>
 
             <label class="label" for="budget_max">Budget Max:</label>
-            <input class="input" type="number" id="budget_max" name="budget_max" required>
+            <input class="input" type="number" id="budget_max" name="budget_max" value="{{ gig.budget_max }}" required>
 
             <label class="label" for="description">Description:</label>
-            <input class="input" type="text" id="description" name="description">
+            <input class="input" type="text" id="description" name="description" value="{{ gig.description }}" required>
 
             <input class="submit" type="submit" value="Update Gig">
         </form>

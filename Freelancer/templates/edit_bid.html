@@ -132,18 +132,18 @@
     {% endif %}
 
     <div class="container">
-        <h2>Update Your Bid for "{{ gig.title }}"</h2>
+        <h2>Update Your Bid for "{{ bid.gig.title }}"</h2>
         <form action="" method="POST">
             {% csrf_token %}
 
             <label class="label" for="amount">Amount:</label>
-            <input class="input" type="number" id="amount" name="amount" required>
+            <input class="input" type="number" id="amount" name="amount" value="{{ bid.amount }}" required>
 
             <label class="label" for="days">Days to complete:</label>
-            <input class="input" type="number" id="days" name="days" required>
+            <input class="input" type="number" id="days" name="days" value="{{ bid.days }}" required>
 
             <label class="label">Cover Letter:</label><br>
-            <textarea name="cover_letter" rows="5" cols="40" required></textarea><br>
+            <textarea name="cover_letter" rows="5" cols="40" required></textarea>{{ bid.cover_letter }}<br>
 
             <input class="submit" type="submit" value="Update Bid">
         </form>
