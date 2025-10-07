@@ -168,7 +168,7 @@
                        <p>{{ gig.get_status_display }}</p>
                     </td>
                     <td class="actions">
-                        {% if gig.status == "Open" %}
+                        {% if gig.status == "OPEN" %}
                         <a href=>Edit</a>
                         <a href="{% url 'delete_gig' gig.id %}" style="color: red;">Delete</a>
                         {% else %}

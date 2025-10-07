@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Client Inbox</title>
+    <title>Client Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -58,39 +58,42 @@
             color: #007bff;
         }
 
-        .conversation-card {
+        .summary ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bid-card {
             border: 1px solid #ddd;
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 6px;
             background-color: #fafafa;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .conversation-info {
-            font-size: 1rem;
+        .bid-card h3 {
+            margin: 0 0 10px;
+            color: #333;
         }
 
-        .conversation-info small {
-            color: #888;
-            font-size: 0.85rem;
+        .bid-card p {
+            margin: 5px 0;
         }
 
-        .view-button {
-            background-color: #007bff;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
+        .bid-card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
             text-decoration: none;
-            font-size: 0.9rem;
         }
 
-        .empty-message {
-            color: #666;
-            font-size: 0.95rem;
-            margin-top: 20px;
+        .bid-card a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 600px) {
@@ -112,14 +115,23 @@
                 font-size: 20px;
             }
 
-            .conversation-card {
-                flex-direction: column;
-                align-items: flex-start;
+            .summary li {
+                font-size: 14px;
+            }
+
+            .bid-card {
                 padding: 12px;
             }
 
-            .view-button {
-                margin-top: 10px;
+            .bid-card h3 {
+                font-size: 18px;
+            }
+
+            .bid-card p {
+                font-size: 14px;
+            }
+
+            .bid-card a {
                 font-size: 14px;
             }
         }
@@ -127,30 +139,36 @@
 </head>
 <body>
     <header>
-        <h1>Welcome, {{ user.username |first | upper }}</h1>
+        <h1>Welcome, {{ user.username |first | upper }} </h1>
         <nav>
             <a href="{% url 'profile_page' %}">Profile</a>
             <a href="{% url 'createGig' %}">Post New Gig</a>
             <a href="{% url 'viewGig' %}">My Gigs</a>
-            <a href="{% url 'inbox_view' %}">Inbox</a>
+            <a href="{% url 'inbox_view'  %}">Inbox</a>
             <a href="{% url 'viewGig' %}">Review</a>
             <a href="{% url 'client_logout' %}">Logout</a>
         </nav>
     </header>
 
-    <section>
-        <h2>Your Conversations</h2>
+    <section class="summary">
+        <h2>Dashboard Summary</h2>
+        <ul>
+             <li>Total Gigs Posted: {{ total_gigs }}</li>
+        </ul>
+    </section>
 
-        {% for convo in conversations %}
-            <div class="conversation-card">
-                <div class="conversation-info">
-                    <strong>{{ convo.freelancer.username }}</strong><br>
-                    <small>Started: {{ convo.started_at|date:"M d, Y" }}</small>
-                </div>
-                <a href="{% url 'conversation_detail' convo.id %}" class="view-button">View</a>
+    <section class="recent-bids">
+        <h2>Recent Bids on Your Gigs</h2>
+        {% for bid in recent_bids %}
+            <div class="bid-card">
+                <h3>{{ bid.gig.title }}</h3>
+                <p>Freelancer: {{ bid.freelancer.username }}</p>
+                <p>Amount: ${{ bid.amount }}</p>
+                <p>Days: {{ bid.days }}</p>
+                <a href="{% url 'view_bids_for_gig' bid.gig.id %}">View Bid</a>
             </div>
         {% empty %}
-            <p class="empty-message">You have no active conversations yet.</p>
+            <p>No recent bids.</p>
         {% endfor %}
     </section>
 </body>
