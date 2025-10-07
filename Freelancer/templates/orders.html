@@ -140,9 +140,9 @@
         {% for order in orders %}
             <div class="order-card">
                 <h3>{{ order.bid.gig.title }}</h3>
-                <p><strong>Client:</strong> {{ order.bid.gig.client.username }}</p>
-                <p><strong>Amount:</strong> ${{ order.bid.amount }}</p>
-                <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
+                <p><strong>Client:</strong> {{ order.gig.client.username }}</p>
+                <p><strong>Amount:</strong> ${{ order.gig.agreed_amount }}</p>
+                <p><strong>Delivery Time:</strong> {{ order.gig.days }} days</p>
                 <p><strong>Status:</strong> {{ order.status }}</p>
 
                 {% if order.status == 'IN_PROGRESS' %}
