@@ -75,6 +75,31 @@
             margin: 5px 0;
         }
 
+        .order-card p strong {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .order-card form {
+            margin-top: 10px;
+        }
+
+        .order-card button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-card button:hover {
+            background-color: #0056b3;
+        }
+
         .order-card a {
             display: inline-block;
             margin-top: 10px;
@@ -120,6 +145,11 @@
             .order-card a {
                 font-size: 14px;
             }
+
+            .order-card button {
+                font-size: 13px;
+                padding: 7px 14px;
+            }
         }
     </style>
 </head>
@@ -142,10 +172,10 @@
                 <h3>{{ order.gig.title }}</h3>
                 <p><strong>Client:</strong> {{ order.gig.client.username }}</p>
                 <p><strong>Amount:</strong> ${{ order.agreed_amount }}</p>
-                <p><strong>Delivery Time:</strong> {{ order.delivery_days }} days</p>
+                <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
                 <p><strong>Status:</strong> {{ order.status }}</p>
 
-                {% if order.status == 'IN_PROGRESS' %}
+                {% if order.status == 'IN PROGRESS' %}
                     <form method="POST" action="#">
                         {% csrf_token %}
                         <button type="submit">Mark as Delivered</button>

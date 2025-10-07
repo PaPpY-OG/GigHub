@@ -48,8 +48,8 @@ class Order(models.Model):
     freelancer = models.ForeignKey(User, on_delete=models.CASCADE)
     agreed_amount = models.DecimalField(max_digits=10, decimal_places=2)
     milestones = models.JSONField(blank=True)  # List of milestones with details
-    status = models.CharField(max_length=20, choices=[('IN_PROGRESS','In Progress'),
-    ('DELIVERED','Delivered'),('CLOSED','Closed')], default='IN_PROGRESS')
+    status = models.CharField(max_length=20, choices=[('IN PROGRESS','In Progress'),
+    ('DELIVERED','Delivered'),('CLOSED','Closed')], default='IN PROGRESS')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
