@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Gig, Bid, Profile, Order, Conversation, Message
-from django.http import HttpResponseForbidden   
+from django.http import HttpResponseForbidden
+from django.db.models import Q
 
 # Create your views here.
 def landingpage(request: HttpRequest):
@@ -183,9 +184,8 @@ def conversation(request, convo_id):
 
 @login_required(login_url='clientloginPage')
 def inbox_view(request):
-    conversations = Conversation.objects.filter(client=request.user).order_by('-updated_at')
+    conversations = Conversation.objects.filter(Q(client=request.user) | Q(freelancer=request.user)).order_by('-updated_at')
     return render(request, 'inbox.html', {'conversations': conversations})
-
 
 @login_required(login_url='clientloginPage')
 def clientlogout(request: HttpRequest):
