@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edit Bid</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: #fff;
+            margin: 40px auto;
+            padding: 30px 25px;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(3, 34, 209, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            color: gray;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .input {
+            border: none;
+            border-bottom: 1px solid rgb(48, 46, 46);
+            padding: 10px 5px;
+            font-size: 16px;
+            margin-bottom: 25px;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .submit {
+            background-color: #0977c0;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 17px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit:hover {
+            background-color: #2991e7;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .message.error {
+            color: red;
+        }
+
+        .message.success {
+            color: #0977c0;
+        }
+        h2{
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'freelancer_dash' %}">Dashboard</a>
+            <a href="{% url 'Fprofile_page' %}">Profile</a>
+            <a href="{% url 'active_gigs' %}">Active Gigs</a>
+            <a href="{% url 'my_bids' %}">My Bids</a>
+            <a href="{% url 'freelancer_orders' %}">Orders</a>
+            <a href="{% url 'message_view' %}">Inbox</a>
+            <a href="{% url 'freelancer_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    {% if error %}
+        <div class="message error">{{ error }}</div>
+    {% endif %}
+    
+    {% if success %}
+        <div class="message success">{{ success }}</div>
+    {% endif %}
+
+    <div class="container">
+        <h2>Update Your Bid for "{{ gig.title }}"</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <label class="label" for="amount">Amount:</label>
+            <input class="input" type="number" id="amount" name="amount" required>
+
+            <label class="label" for="days">Days to complete:</label>
+            <input class="input" type="number" id="days" name="days" required>
+
+            <label class="label">Cover Letter:</label><br>
+            <textarea name="cover_letter" rows="5" cols="40" required></textarea><br>
+
+            <input class="submit" type="submit" value="Update Bid">
+        </form>
+    </div>
+</body>
+</html>

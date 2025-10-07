@@ -10,6 +10,7 @@ urlpatterns = [
     path('freelancer/activegigs/',views.active_gigs, name='active_gigs'),
     path('bid/<int:gig_id>/', views.submit_bid, name='submit_bid'),
     path('freelancer/bids/', views.my_bids, name='my_bids'),
+    path('edit_bid/<int:bid_id>/', views.edit_bid, name='edit_bid'),
     path('withdraw_bid/<int:bid_id>/', views.withdraw_bid, name='withdraw_bid'),
     path('freelancer/start_convo/<int:bid_id>/', views.start_convo, name='start_convo'),
     path('freelancer/conversations/<int:convo_id>/', views.conversations, name='conversations'),

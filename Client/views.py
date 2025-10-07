@@ -157,6 +157,21 @@ def reject_bid(request, bid_id):
     return redirect('view_bids_for_gig', gig_id=bid.gig.id)
 
 @login_required(login_url='clientloginPage')
+def edit_gig(request, gig_id):
+    gig = get_object_or_404(Gig, id=gig_id, client=request.user)
+    
+    if request.method == 'POST':
+        gig.title = request.POST.get('title')
+        gig.category = request.POST.get('category')
+        gig.budget_min = request.POST.get('budget_min')
+        gig.budget_max = request.POST.get('budget_max')
+        gig.description = request.POST.get('description')
+        gig.save()
+        return redirect('viewGig')
+    return render(request, 'edit_gig.html', {'gig':gig})
+
+
+@login_required(login_url='clientloginPage')
 def delete_gig(request, gig_id):
     gig = get_object_or_404(Gig, id=gig_id, client=request.user)
     gig.delete()

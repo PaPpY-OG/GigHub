@@ -13,6 +13,7 @@ urlpatterns = [
     path('client/viewbid/<int:gig_id>/', views.view_bids_for_gig, name="view_bids_for_gig"),
     path('accept_bid/<int:bid_id>/', views.accept_bid, name="accept_bid"),
     path('reject_bid/<int:bid_id>/', views.reject_bid, name="reject_bid"),
+    path('edit_gig/<int:gig_id>/', views.edit_gig, name="edit_gig"),
     path('delete_gig/<int:gig_id>/', views.delete_gig, name="delete_gig"),
     path('start_conversation/<int:bid_id>/', views.start_conversation, name="start_conversation"),
     path('conversation/<int:convo_id>/', views.conversation, name="conversation"),

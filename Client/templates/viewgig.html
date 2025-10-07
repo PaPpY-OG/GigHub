@@ -169,7 +169,7 @@
                     </td>
                     <td class="actions">
                         {% if gig.status == "OPEN" %}
-                        <a href=>Edit</a>
+                        <a href="{% url 'edit_gig' gig.id %}">Edit</a>
                         <a href="{% url 'delete_gig' gig.id %}" style="color: red;">Delete</a>
                         {% else %}
                         <span style="color: gray;">Already Assigned</span>

@@ -151,7 +151,7 @@
                     <td>{{ bid.created_at|date:"M d, Y" }}</td>
                     <td class="actions">
                         {% if bid.status == "PENDING" %}
-                            <a href="#">Edit</a>
+                            <a href="{% url 'edit_bid' bid.id %}">Edit</a>
                             <a href="{% url 'withdraw_bid' bid.id %}">Withdraw</a>
                         {% elif bid.status == "ACCEPTED" %}
                             <a href="{% url 'start_convo' bid.id %}">Message</a>

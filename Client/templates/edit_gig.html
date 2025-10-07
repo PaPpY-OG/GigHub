@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edit Gig</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: #fff;
+            margin: 40px auto;
+            padding: 30px 25px;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(3, 34, 209, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            color: gray;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .input {
+            border: none;
+            border-bottom: 1px solid rgb(48, 46, 46);
+            padding: 10px 5px;
+            font-size: 16px;
+            margin-bottom: 25px;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .submit {
+            background-color: #0977c0;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 17px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit:hover {
+            background-color: #2991e7;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .message.error {
+            color: red;
+        }
+
+        .message.success {
+            color: #0977c0;
+        }
+        h2{
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'client_dash' %}">Dashboard</a>
+            <a href="{% url 'profile_page' %}">Profile</a>
+            <a href="{% url 'viewGig' %}">My Gigs</a>
+            <a href="{% url 'inbox_view'  %}">Inbox</a>
+            <a href="{% url 'viewGig' %}">Review</a>
+            <a href="{% url 'client_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    {% if error %}
+        <div class="message error">{{ error }}</div>
+    {% endif %}
+    
+    {% if message %}
+        <div class="message success">{{ message }}</div>
+    {% endif %}
+
+    <div class="container">
+        <h2>Update Gig</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <label class="label" for="title">Title:</label>
+            <input class="input" type="text" id="title" name="title" required>
+
+            <label class="label" for="category">Category:</label>
+            <input class="input" type="text" id="category" name="category">
+
+            <label class="label" for="budget_min">Budget Min:</label>
+            <input class="input" type="number" id="budget_min" name="budget_min" required>
+
+            <label class="label" for="budget_max">Budget Max:</label>
+            <input class="input" type="number" id="budget_max" name="budget_max" required>
+
+            <label class="label" for="description">Description:</label>
+            <input class="input" type="text" id="description" name="description">
+
+            <input class="submit" type="submit" value="Update Gig">
+        </form>
+    </div>
+</body>
+</html>

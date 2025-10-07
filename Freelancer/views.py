@@ -126,6 +126,18 @@ def my_bids(request: HttpRequest):
     return render(request, 'mybids.html', {'bids': bids})
 
 @login_required(login_url='freelancerloginPage')
+def edit_bid(request, bid_id):
+    bid = get_object_or_404(Bid, id = bid_id, freelancer=request.user)
+
+    if request.method == 'POST':
+        bid.amount = request.POST.get('amount')
+        bid.days = request.POST.get('days')
+        bid.cover_letter = request.POST.get('cover_letter')
+        bid.save()
+        return redirect('my_bids')
+    return render(request, 'edit_bid.html', {'bid':bid})
+
+@login_required(login_url='freelancerloginPage')
 def withdraw_bid(request, bid_id):
     bid = get_object_or_404(Bid, id=bid_id, freelancer=request.user)
     bid.delete()
