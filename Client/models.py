@@ -48,7 +48,7 @@ class Order(models.Model):
     agreed_amount = models.DecimalField(max_digits=10, decimal_places=2)
     milestones = models.JSONField(blank=True)  # List of milestones with details
     status = models.CharField(max_length=20, choices=[('IN_PROGRESS','In Progress'),
-    ('DELIVERED','Delivered'),('CLOSED','CLosed')], default='IN_PROGRESS')
+    ('DELIVERED','Delivered'),('CLOSED','Closed')], default='IN_PROGRESS')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

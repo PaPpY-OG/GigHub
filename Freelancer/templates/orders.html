@@ -137,14 +137,22 @@
 
     <section class="orders">
         <h2>My Orders</h2>
-        {% for bid in orders %}
+        {% for order in orders %}
             <div class="order-card">
-                <h3>{{ bid.gig.title }}</h3>
-                <p><strong>Client:</strong> {{ bid.gig.client.username }}</p>
-                <p><strong>Amount:</strong> ${{ bid.amount }}</p>
-                <p><strong>Delivery Time:</strong> {{ bid.days }} days</p>
+                <h3>{{ order.bid.gig.title }}</h3>
+                <p><strong>Client:</strong> {{ order.bid.gig.client.username }}</p>
+                <p><strong>Amount:</strong> ${{ order.bid.amount }}</p>
+                <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
                 <p><strong>Status:</strong> {{ order.status }}</p>
-                <a href=>View Gig Details</a>
+
+                {% if order.status == 'IN_PROGRESS' %}
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <button type="submit">Mark as Delivered</button>
+                    </form>
+                {% endif %}
+
+            <a href="#">View Gig Details</a>
             </div>
         {% empty %}
             <p>You have no active orders yet.</p>
