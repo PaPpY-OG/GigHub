@@ -3,7 +3,8 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Gig, Bid, Profile, Order, Conversation, Message, Review
+from django.contrib.contenttypes.models import ContentType
+from .models import Gig, Bid, Profile, Order, Conversation, Message, Review, Attachment
 from django.http import HttpResponseForbidden
 from django.db.models import Q
 
@@ -185,16 +186,26 @@ def start_conversation(request, bid_id):
 @login_required(login_url='clientloginPage')
 def conversation(request, convo_id):
     convo = get_object_or_404(Conversation, id=convo_id)
-    
+
     if request.user not in [convo.client, convo.freelancer]:
         return HttpResponseForbidden()
 
     if request.method == 'POST':
-        Message.objects.create(conversation=convo,sender=request.user,text=request.POST['text'])
+        text = request.POST.get('text', '').strip()
+        file = request.FILES.get('attachment')
+
+        # Create the message first
+        message = Message.objects.create(conversation=convo, sender=request.user, text=text)
+
+        # If there's a file, attach it to the message
+        if file:
+            Attachment.objects.create(content_type=ContentType.objects.get_for_model(Message), object_id=message.id,file=file)
+
         return redirect('conversation', convo.id)
 
     messages = convo.message_set.order_by('sent_at')
     return render(request, 'conversation.html', {'convo': convo, 'messages': messages})
+
 
 @login_required(login_url='clientloginPage')
 def inbox_view(request):

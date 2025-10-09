@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
 # Create your models here.
@@ -75,6 +75,7 @@ class Message(models.Model):
     text = models.TextField()
     is_read = models.BooleanField(default=False)
     sent_at = models.DateTimeField(auto_now_add=True)
+    attachments = GenericRelation(Attachment, blank=True)
 
 class Review(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE)

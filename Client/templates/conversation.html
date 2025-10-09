@@ -153,14 +153,20 @@
                 <div class="message {% if msg.sender == request.user %}sent{% else %}received{% endif %}">
                     <strong>{{ msg.sender.username }}</strong><br>
                     {{ msg.text }}<br>
+
+                    {% for attachment in msg.attachments.all %}
+                        <p><a href="{{ attachment.file.url }}" target="_blank">📎 {{ attachment.file.name }}</a></p>
+                    {% endfor %}
+
                     <small>{{ msg.sent_at|date:"M d, H:i" }}</small>
                 </div>
             {% endfor %}
         </div>
 
-        <form method="post" class="chat-form">
+        <form method="post" class="chat-form" enctype="multipart/form-data">
             {% csrf_token %}
             <textarea name="text" rows="2" placeholder="Type your message..." required></textarea>
+            <input type="file" name="attachment">
             <button type="submit">Send</button>
         </form>
     </div>
