@@ -124,7 +124,7 @@
         <form action="" method="POST">
             {% csrf_token %}
             <label class="label" for="rating">Rating:</label>
-            <input class="input" type="number" id="rating" name="rating" placeholder="1-5" required>
+            <input class="input" type="number" id="rating" name="rating" placeholder="1-10" required>
 
             <label class="label" for="comment">Comment:</label>
             <textarea name="comment" rows="5" cols="40" required>{{ bid.cover_letter|escape }}</textarea><br>

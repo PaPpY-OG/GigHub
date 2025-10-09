@@ -243,7 +243,7 @@ def leave_review(request, order_id):
                 comment=comment
             )
             message = "Review submitted successfully."
-            return redirect('client_orders')
+            return redirect('client_reviews')
 
     return render(request, 'submit_review.html', {'order': order, 'error': error, 'message': message})
 
