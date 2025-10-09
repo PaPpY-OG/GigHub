@@ -147,7 +147,7 @@ def accept_bid(request, bid_id):
     bid.gig.status = 'ASSIGNED'
     bid.gig.save()
     if not Order.objects.filter(gig=bid.gig).exists():
-        Order.objects.create(gig=bid.gig, freelancer=bid.freelancer,agreed_amount=bid.amount,milestones=[],status='IN_PROGRESS')
+        Order.objects.create(gig=bid.gig, bid=bid, freelancer=bid.freelancer,agreed_amount=bid.amount,milestones=[],status='IN PROGRESS')
     return redirect('view_bids_for_gig', gig_id=bid.gig.id)
 
 def reject_bid(request, bid_id):    
