@@ -22,5 +22,6 @@ urlpatterns = [
     path('mark_completed/<int:order_id>/', views.mark_completed, name="mark_completed"),
     path('review/<int:order_id>/', views.leave_review, name="submit_review"),
     path('client/reviews/', views.view_reviews, name="client_reviews"),
+    path('edit_review/<int:review_id>/', views.edit_review, name="edit_review"),
     path('client/logout/', views.clientlogout, name="client_logout")
 ]

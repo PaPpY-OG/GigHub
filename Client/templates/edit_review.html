@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Leave a Review</title>
+    <title>Edit Review</title>
     <style>
         * {
             box-sizing: border-box;
@@ -105,6 +105,10 @@
         .message.success {
             color: #0977c0;
         }
+        h2{
+            color: #007bff;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -120,16 +124,26 @@
         </nav>
     </header>
 
+    {% if error %}
+        <div class="message error">{{ error }}</div>
+    {% endif %}
+    
+    {% if message %}
+        <div class="message success">{{ message }}</div>
+    {% endif %}
+
     <div class="container">
+        <h2>Edit Review</h2>
         <form action="" method="POST">
             {% csrf_token %}
+
             <label class="label" for="rating">Rating:</label>
-            <input class="input" type="number" id="rating" name="rating" placeholder="1-10" required>
+            <input class="input" type="number" id="rating" name="rating" value="{{ review.rating }}" required>
 
             <label class="label" for="comment">Comment:</label>
-            <textarea name="comment" rows="5" cols="40" required></textarea><br>
+            <textarea name="comment" rows="5" cols="40" required>{{ review.comment|escape }}</textarea><br>
 
-            <input class="submit" type="submit" value="Submit Review">
+            <input class="submit" type="submit" value="Update Review">
         </form>
     </div>
 </body>

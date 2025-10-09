@@ -251,3 +251,25 @@ def leave_review(request, order_id):
 def view_reviews(request: HttpRequest):
     reviews = Review.objects.filter(client=request.user).select_related('freelancer', 'order').order_by('-created_at')
     return render(request, 'view_reviews.html', {'reviews': reviews})
+
+@login_required(login_url='clientloginPage')
+def edit_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id, client=request.user)
+    error, message = None, None
+
+    if request.method == 'POST':
+        rating = int(request.POST.get('rating', 0))
+        comment = request.POST.get('comment', '').strip()
+
+        if rating < 1 or rating > 10:
+            error = "Rating must be between 1 and 10."
+        elif not comment:
+            error = "Comment cannot be empty."
+        else:
+            review.rating = rating
+            review.comment = comment
+            review.save()
+            message = "Review updated successfully."
+            return redirect('client_reviews')
+
+    return render(request, 'edit_review.html', {'review': review, 'error': error, 'message': message})
