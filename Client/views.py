@@ -230,8 +230,8 @@ def leave_review(request, order_id):
 
         if Review.objects.filter(order=order).exists():
             error = "You've already submitted a review for this order."
-        elif rating < 1 or rating > 5:
-            error = "Rating must be between 1 and 5."
+        elif rating < 1 or rating > 10:
+            error = "Rating must be between 1 and 10."
         elif not comment:
             error = "Comment cannot be empty."
         else:
