@@ -15,5 +15,6 @@ urlpatterns = [
     path('freelancer/start_convo/<int:bid_id>/', views.start_convo, name='start_convo'),
     path('freelancer/conversations/<int:convo_id>/', views.conversations, name='conversations'),
     path('freelancer/inbox/', views.message_view, name='message_view'),
-    path('freelancer/orders/', views.freelancerOrders, name='freelancer_orders')
+    path('freelancer/orders/', views.freelancerOrders, name='freelancer_orders'),
+    path('freelancer/mark_delivered/<int:order_id>/', views.mark_delivered, name='mark_delivered')
 ]

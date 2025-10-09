@@ -154,6 +154,14 @@ def freelancerOrders(request):
     return render(request, 'orders.html', {'orders': orders})
 
 @login_required(login_url='freelancerloginPage')
+def mark_delivered(request, order_id):
+    order = get_object_or_404(Order, id=order_id, freelancer=request.user)
+    if order.status == 'IN PROGRESS':
+        order.status = 'DELIVERED'
+        order.save()
+    return redirect('freelancer_orders')
+
+@login_required(login_url='freelancerloginPage')
 def start_convo(request, bid_id):
     bid = get_object_or_404(Bid, id=bid_id)
     convo, created = Conversation.objects.get_or_create(client = bid.gig.client, freelancer = bid.freelancer)

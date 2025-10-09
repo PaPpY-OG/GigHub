@@ -176,10 +176,14 @@
                 <p><strong>Status:</strong> {{ order.status }}</p>
 
                 {% if order.status == 'IN PROGRESS' %}
-                    <form method="POST" action="#">
+                    <form method="POST" action="{% url 'mark_delivered' order.id %}">
                         {% csrf_token %}
                         <button type="submit">Mark as Delivered</button>
                     </form>
+                {% elif order.status == 'DELIVERED' %}
+                    <span>Waiting for client approval</span>
+                {% elif order.status == 'COMPLETED' %}
+                    <span>Order Completed</span>
                 {% endif %}
             </div>
         {% empty %}
