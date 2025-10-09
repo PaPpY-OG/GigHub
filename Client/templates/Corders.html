@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Client Dashboard</title>
+    <title>My Orders</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -58,17 +58,7 @@
             color: #007bff;
         }
 
-        .summary ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .summary li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .bid-card {
+        .order-card {
             border: 1px solid #ddd;
             padding: 15px;
             margin-bottom: 15px;
@@ -76,23 +66,48 @@
             background-color: #fafafa;
         }
 
-        .bid-card h3 {
+        .order-card h3 {
             margin: 0 0 10px;
             color: #333;
         }
 
-        .bid-card p {
+        .order-card p {
             margin: 5px 0;
         }
 
-        .bid-card a {
+        .order-card p strong {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .order-card form {
+            margin-top: 10px;
+        }
+
+        .order-card button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-card button:hover {
+            background-color: #0056b3;
+        }
+
+        .order-card a {
             display: inline-block;
             margin-top: 10px;
             color: #007bff;
             text-decoration: none;
         }
 
-        .bid-card a:hover {
+        .order-card a:hover {
             text-decoration: underline;
         }
 
@@ -115,35 +130,35 @@
                 font-size: 20px;
             }
 
-            .summary li {
-                font-size: 14px;
-            }
-
-            .bid-card {
+            .order-card {
                 padding: 12px;
             }
 
-            .bid-card h3 {
+            .order-card h3 {
                 font-size: 18px;
             }
 
-            .bid-card p {
+            .order-card p {
                 font-size: 14px;
             }
 
-            .bid-card a {
+            .order-card a {
                 font-size: 14px;
+            }
+
+            .order-card button {
+                font-size: 13px;
+                padding: 7px 14px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome, {{ user.username |first | upper }} </h1>
         <nav>
+            <a href="{% url 'client_dash' %}">Dashboard</a>
             <a href="{% url 'profile_page' %}">Profile</a>
             <a href="{% url 'createGig' %}">Post New Gig</a>
-            <a href="{% url 'viewGig' %}">My Gigs</a>
             <a href="{% url 'inbox_view'  %}">Inbox</a>
             <a href="{% url 'client_orders' %}">Orders</a>
             <a href="{% url 'client_reviews' %}">Reviews</a>
@@ -151,25 +166,33 @@
         </nav>
     </header>
 
-    <section class="summary">
-        <h2>Dashboard Summary</h2>
-        <ul>
-             <li>Total Gigs Posted: {{ total_gigs }}</li>
-        </ul>
-    </section>
+    <section class="orders">
+        <h2>My Orders</h2>
+        {% for order in orders %}
+            <div class="order-card">
+                <h3>{{ order.gig.title }}</h3>
+                <p><strong>Category:</strong> {{ order.gig.category }}</p>
+                <p><strong>Freelancer:</strong> {{ order.freelancer.username }}</p>
+                <p><strong>Amount:</strong> ${{ order.agreed_amount }}</p>
+                <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
+                <p><strong>Status:</strong> {{ order.status }}</p>
 
-    <section class="recent-bids">
-        <h2>Recent Bids on Your Gigs</h2>
-        {% for bid in recent_bids %}
-            <div class="bid-card">
-                <h3>{{ bid.gig.title }}</h3>
-                <p>Freelancer: {{ bid.freelancer.username }}</p>
-                <p>Amount: ${{ bid.amount }}</p>
-                <p>Days: {{ bid.days }}</p>
-                <a href="{% url 'view_bids_for_gig' bid.gig.id %}">View Bid</a>
+                {% if order.status == 'DELIVERED' %}
+                    <form method="POST" action="{% url 'mark_completed' order.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Mark as Completed</button>
+                    </form>
+                {% elif order.status == 'IN PROGRESS' %}
+                    <span>Waiting for freelancer delivery</span>
+                {% elif order.status == 'CLOSED' %}
+                    <form method="GET" action="{% url 'submit_review' order.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Leave a Review</button>
+                    </form>
+                {% endif %}
             </div>
         {% empty %}
-            <p>No recent bids.</p>
+            <p>You have no active orders yet.</p>
         {% endfor %}
     </section>
 </body>

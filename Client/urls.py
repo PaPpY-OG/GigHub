@@ -18,5 +18,9 @@ urlpatterns = [
     path('start_conversation/<int:bid_id>/', views.start_conversation, name="start_conversation"),
     path('conversation/<int:convo_id>/', views.conversation, name="conversation"),
     path('client/inbox/', views.inbox_view, name="inbox_view"),
+    path('client/orders/', views.clientOrders, name="client_orders"),
+    path('mark_completed/<int:order_id>/', views.mark_completed, name="mark_completed"),
+    path('review/<int:order_id>/', views.leave_review, name="submit_review"),
+    path('client/reviews/', views.view_reviews, name="client_reviews"),
     path('client/logout/', views.clientlogout, name="client_logout")
 ]

@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Gig, Bid, Profile, Order, Conversation, Message
+from .models import Gig, Bid, Profile, Order, Conversation, Message, Review
 from django.http import HttpResponseForbidden
 from django.db.models import Q
 
@@ -170,7 +170,6 @@ def edit_gig(request, gig_id):
         return redirect('viewGig')
     return render(request, 'edit_gig.html', {'gig':gig})
 
-
 @login_required(login_url='clientloginPage')
 def delete_gig(request, gig_id):
     gig = get_object_or_404(Gig, id=gig_id, client=request.user)
@@ -206,3 +205,49 @@ def inbox_view(request):
 def clientlogout(request: HttpRequest):
     logout(request)
     return render (request, 'login3.html')
+
+@login_required(login_url='clientloginPage')
+def clientOrders(request: HttpRequest):
+    orders = Order.objects.filter(gig__client=request.user).select_related('gig', 'bid', 'freelancer')
+    return render(request, 'Corders.html', {'orders': orders})
+
+@login_required(login_url='clientloginPage')
+def mark_completed(request, order_id):
+    order = get_object_or_404(Order, id=order_id, gig__client=request.user)
+    if order.status == 'DELIVERED':
+        order.status = 'CLOSED'
+        order.save()
+    return redirect('client_orders')
+
+@login_required(login_url='clientloginPage')
+def leave_review(request, order_id):
+    order = get_object_or_404(Order, id=order_id, gig__client=request.user, status='CLOSED')
+    error, message = None, None
+
+    if request.method == 'POST':
+        rating = int(request.POST.get('rating', 0))
+        comment = request.POST.get('comment', '').strip()
+
+        if Review.objects.filter(order=order).exists():
+            error = "You've already submitted a review for this order."
+        elif rating < 1 or rating > 5:
+            error = "Rating must be between 1 and 5."
+        elif not comment:
+            error = "Comment cannot be empty."
+        else:
+            Review.objects.create(
+                order=order,
+                freelancer=order.freelancer,
+                client=request.user,
+                rating=rating,
+                comment=comment
+            )
+            message = "Review submitted successfully."
+            return redirect('client_orders')
+
+    return render(request, 'submit_review.html', {'order': order, 'error': error, 'message': message})
+
+@login_required(login_url='clientloginPage')
+def view_reviews(request: HttpRequest):
+    reviews = Review.objects.filter(client=request.user).select_related('freelancer', 'order').order_by('-created_at')
+    return render(request, 'view_reviews.html', {'reviews': reviews})

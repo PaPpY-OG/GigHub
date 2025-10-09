@@ -170,6 +170,7 @@
         {% for order in orders %}
             <div class="order-card">
                 <h3>{{ order.gig.title }}</h3>
+                <p><strong>Category:</strong> {{ order.gig.category }}</p>
                 <p><strong>Client:</strong> {{ order.gig.client.username }}</p>
                 <p><strong>Amount:</strong> ${{ order.agreed_amount }}</p>
                 <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
@@ -182,7 +183,7 @@
                     </form>
                 {% elif order.status == 'DELIVERED' %}
                     <span>Waiting for client approval</span>
-                {% elif order.status == 'COMPLETED' %}
+                {% elif order.status == 'CLOSED' %}
                     <span>Order Completed</span>
                 {% endif %}
             </div>

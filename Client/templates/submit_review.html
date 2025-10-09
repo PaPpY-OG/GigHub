@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Edit Gig</title>
+    <title>Leave a Review</title>
     <style>
         * {
             box-sizing: border-box;
@@ -105,10 +105,6 @@
         .message.success {
             color: #0977c0;
         }
-        h2{
-            color: #007bff;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -124,35 +120,16 @@
         </nav>
     </header>
 
-    {% if error %}
-        <div class="message error">{{ error }}</div>
-    {% endif %}
-    
-    {% if message %}
-        <div class="message success">{{ message }}</div>
-    {% endif %}
-
     <div class="container">
-        <h2>Edit Gig</h2>
         <form action="" method="POST">
             {% csrf_token %}
+            <label class="label" for="rating">Rating:</label>
+            <input class="input" type="number" id="rating" name="rating" placeholder="1-5" required>
 
-            <label class="label" for="title">Title:</label>
-            <input class="input" type="text" id="title" name="title" value="{{ gig.title }}" required>
+            <label class="label" for="comment">Comment:</label>
+            <textarea name="comment" rows="5" cols="40" required>{{ bid.cover_letter|escape }}</textarea><br>
 
-            <label class="label" for="category">Category:</label>
-            <input class="input" type="text" id="category" value="{{ gig.category }}" name="category">
-
-            <label class="label" for="budget_min">Budget Min:</label>
-            <input class="input" type="number" id="budget_min" name="budget_min" value="{{ gig.budget_min }}" required>
-
-            <label class="label" for="budget_max">Budget Max:</label>
-            <input class="input" type="number" id="budget_max" name="budget_max" value="{{ gig.budget_max }}" required>
-
-            <label class="label" for="description">Description:</label>
-            <input class="input" type="text" id="description" name="description" value="{{ gig.description }}" required>
-
-            <input class="submit" type="submit" value="Update Gig">
+            <input class="submit" type="submit" value="Submit Review">
         </form>
     </div>
 </body>

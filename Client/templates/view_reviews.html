@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Reviews</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            margin: 5px 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section {
+            margin: 30px auto;
+            max-width: 900px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .review-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background-color: #fafafa;
+        }
+
+        .review-card h3 {
+            margin: 0 0 10px;
+            color: #007bff;
+        }
+
+        .review-card p {
+            margin: 5px 0;
+        }
+
+        .stars {
+            color: gold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Reviews</h1>
+        <nav>
+            <a href="{% url 'client_dash' %}">Dashboard</a>
+            <a href="{% url 'profile_page' %}">Profile</a>
+            <a href="{% url 'createGig' %}">Post New Gig</a>
+            <a href="{% url 'inbox_view'  %}">Inbox</a>
+            <a href="{% url 'client_orders' %}">Orders</a>
+            <a href="{% url 'client_reviews' %}">Reviews</a>
+            <a href="{% url 'client_logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <section>
+        {% for review in reviews %}
+            <div class="review-card">
+                <h3>{{ review.order.gig.title }}</h3>
+                <p><strong>Freelancer:</strong> {{ review.freelancer.username }}</p>
+                <p><strong>Rating:</strong> 
+                    <span class="stars">{% for i in "12345"|slice:":review.rating" %}★{% endfor %}</span>
+                    ({{ review.rating }}/5)
+                </p>
+                <p><strong>Comment:</strong> {{ review.comment }}</p>
+                <p><strong>Date:</strong> {{ review.created_at|date:"F j, Y" }}</p>
+            </div>
+        {% empty %}
+            <p>You haven't submitted any reviews yet.</p>
+        {% endfor %}
+    </section>
+</body>
+</html>
