@@ -85,7 +85,8 @@
             margin-top: 10px;
         }
 
-        .order-card button {
+        .order-card button,
+        .order-card a.button-link {
             background-color: #007bff;
             color: white;
             border: none;
@@ -94,22 +95,15 @@
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .order-card button:hover {
-            background-color: #0056b3;
-        }
-
-        .order-card a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007bff;
             text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
 
-        .order-card a:hover {
-            text-decoration: underline;
+        .order-card button:hover,
+        .order-card a.button-link:hover {
+            background-color: #0056b3;
         }
 
         @media (max-width: 600px) {
@@ -143,11 +137,8 @@
                 font-size: 14px;
             }
 
-            .order-card a {
-                font-size: 14px;
-            }
-
-            .order-card button {
+            .order-card button,
+            .order-card a.button-link {
                 font-size: 13px;
                 padding: 7px 14px;
             }
@@ -183,13 +174,16 @@
                         {% csrf_token %}
                         <button type="submit">Mark as Completed</button>
                     </form>
-                {% elif order.status == 'IN PROGRESS' %}
+                {% elif order.status == 'IN_PROGRESS' %}
                     <span>Waiting for freelancer delivery</span>
                 {% elif order.status == 'CLOSED' %}
-                    <form method="GET" action="{% url 'submit_review' order.id %}">
-                        {% csrf_token %}
-                        <button type="submit">Leave a Review</button>
-                    </form>
+                    {% if order.review %}
+                        <a href="{% url 'edit_review' order.review.id %}" class="button-link">Edit Review</a>
+                    {% else %}
+                        <form method="GET" action="{% url 'submit_review' order.id %}">
+                            <button type="submit">Leave a Review</button>
+                        </form>
+                    {% endif %}
                 {% endif %}
             </div>
         {% empty %}
