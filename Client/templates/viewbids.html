@@ -1,196 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>View Bids</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <title>View Bids — GigHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-        nav {
-            margin-top: 10px;
-        }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #0f172a;
+      color: white;
+    }
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-        }
+    .brand span {
+      color: #38bdf8;
+    }
 
-        h2 {
-            color: #007bff;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    .nav a {
+      display: block;
+      padding: 12px;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+      font-size: 14px;
+    }
 
-        .gig-summary {
-            background-color: #f0f8ff;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
+    .nav a:hover {
+      background: rgba(56,189,248,0.2);
+      color: #38bdf8;
+    }
 
-        .gig-summary p {
-            margin: 5px 0;
-            font-size: 15px;
-        }
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+    .title {
+      font-size: 26px;
+      margin-bottom: 15px;
+    }
 
-        th, td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
+    /* GIG SUMMARY */
+    .gig-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
 
-        th {
-            background-color: #f0f0f0;
-            color: #333;
-        }
+    .gig-card h2 {
+      color: #38bdf8;
+      margin-bottom: 10px;
+    }
 
-        .status {
-            font-weight: bold;
-        }
+    .gig-card p {
+      opacity: 0.85;
+      margin: 4px 0;
+      font-size: 14px;
+    }
 
-        .status.pending {
-            color: orange;
-        }
+    /* BIDS GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-        .status.accepted {
-            color: green;
-        }
+    /* BID CARD */
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      transition: 0.3s;
+    }
 
-        .status.rejected {
-            color: red;
-        }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #38bdf8;
+    }
 
-        .actions a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-            margin-right: 10px;
-        }
+    .card h3 {
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
 
-        .actions a:hover {
-            text-decoration: underline;
-        }
+    .meta {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
 
-        .empty {
-            text-align: center;
-            color: gray;
-            padding: 20px;
-        }
+    .cover {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 10px;
+    }
 
-        .back_button {
-            display: block;
-            width: fit-content;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 10px 20px;
-            background-color: #0977c0;
-            color: white;
-            border-radius: 17px;
-            font-weight: 500;
-            font-size: 15px;
-            text-decoration: none;
-            border: none;
-            margin: 30px auto 0;
-            cursor: pointer;
-        }
+    /* STATUS BADGES */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
 
-        .back_button:hover {
-            background-color: #2991e7;
-        }
-    </style>
+    .pending {
+      background: rgba(255,165,0,0.1);
+      border: 1px solid rgba(255,165,0,0.3);
+      color: orange;
+    }
+
+    .accepted {
+      background: rgba(0,255,0,0.1);
+      border: 1px solid rgba(0,255,0,0.3);
+      color: #38bdf8;
+    }
+
+    .rejected {
+      background: rgba(255,0,0,0.1);
+      border: 1px solid rgba(255,0,0,0.3);
+      color: #ff6b6b;
+    }
+
+    /* ACTIONS */
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .accept {
+      background: #38bdf8;
+      color: black;
+    }
+
+    .accept:hover {
+      background: #0ea5e9;
+    }
+
+    .reject {
+      background: rgba(255,0,0,0.2);
+      color: #ff6b6b;
+      border: 1px solid rgba(255,0,0,0.3);
+    }
+
+    .reject:hover {
+      background: rgba(255,0,0,0.3);
+    }
+
+    .message {
+      background: rgba(56,189,248,0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56,189,248,0.3);
+    }
+
+    .message:hover {
+      background: rgba(56,189,248,0.3);
+    }
+
+    .empty {
+      opacity: 0.7;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <nav>
-            <a href="{% url 'client_dash' %}">Dashboard</a>
-            <a href="{% url 'profile_page' %}">Profile</a>
-            <a href="{% url 'createGig' %}">Post New Gig</a>
-            <a href="{% url 'viewGig' %}">My Gigs</a>
-            <a href="{% url 'inbox_view'  %}">Inbox</a>
-            <a href="{% url 'client_orders' %}">Orders</a>
-            <a href="{% url 'client_reviews' %}">Reviews</a>
-            <a href="{% url 'client_logout' %}">Logout</a>
-        </nav>
-    </header>
 
-    <div class="container">
-        <h2>Bids for "{{ gig.title }}"</h2>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand">Gig<span>Hub</span></div>
 
-        <div class="gig-summary">
-            <p><strong>Category:</strong> {{ gig.category }}</p>
-            <p><strong>Budget:</strong> ${{ gig.budget_min }} - ${{ gig.budget_max }}</p>
-            <p><strong>Description:</strong> {{ gig.description }}</p>
-            <p><strong>Status:</strong> {% if gig.closed %}<span style="color: red;">Closed</span>{% else %}<span style="color: #0977c0;">Open</span>{% endif %}</p>
-            <p><strong>Posted on:</strong> {{ gig.created_at|date:"M d, Y" }}</p>
-        </div>
+  <div class="nav">
+    <a href="{% url 'client_dash' %}">Dashboard</a>
+    <a href="{% url 'profile_page' %}">Profile</a>
+    <a href="{% url 'createGig' %}">Post Gig</a>
+    <a href="{% url 'viewGig' %}">My Gigs</a>
+    <a href="{% url 'inbox_view' %}">Inbox</a>
+    <a href="{% url 'client_orders' %}">Orders</a>
+    <a href="{% url 'client_reviews' %}">Reviews</a>
+    <a href="{% url 'client_logout' %}">Logout</a>
+  </div>
+</div>
 
-        {% if bids %}
-        <table>
-            <tr>
-                <th>Freelancer</th>
-                <th>Amount</th>
-                <th>Days</th>
-                <th>Cover Letter</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            {% for bid in bids %}
-            <tr>
-                <td><a href="{% url 'Fprofile_page' %}">{{ bid.freelancer.username }}</a></td>
-                <td>${{ bid.amount }}</td>
-                <td>{{ bid.days }} days</td>
-                <td>{{ bid.cover_letter|truncatechars:100 }}</td>
-                <td class="status {{ bid.status|lower }}">{{ bid.status }}</td>
-                <td class="actions">
-                    {% if bid.status == "PENDING" %}
-                        <a href="{% url 'accept_bid' bid.id %}">Accept</a>
-                        <a href="{% url 'reject_bid' bid.id %}">Reject</a>
-                    {% elif bid.status == "ACCEPTED" %}
-                        <a href="{% url 'start_conversation' bid.id %}">Message</a>
-                    {% else %}
-                        <span style="color: gray;">Already Assigned</span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+<!-- MAIN -->
+<div class="main">
+
+  <div class="title">Bids for "{{ gig.title }}"</div>
+
+  <!-- GIG SUMMARY -->
+  <div class="gig-card">
+    <h2>{{ gig.title }}</h2>
+    <p><strong>Category:</strong> {{ gig.category }}</p>
+    <p><strong>Budget:</strong> ${{ gig.budget_min }} - ${{ gig.budget_max }}</p>
+    <p><strong>Description:</strong> {{ gig.description }}</p>
+    <p><strong>Status:</strong> {% if gig.closed %}Closed{% else %}Open{% endif %}</p>
+    <p><strong>Posted:</strong> {{ gig.created_at|date:"M d, Y" }}</p>
+  </div>
+
+  {% if bids %}
+
+  <div class="grid">
+
+    {% for bid in bids %}
+
+    <div class="card">
+
+      <h3>{{ bid.freelancer.username }}</h3>
+
+      <div class="meta">
+        ${{ bid.amount }} • {{ bid.days }} days
+      </div>
+
+      <div class="badge {{ bid.status|lower }}">
+        {{ bid.status }}
+      </div>
+
+      <div class="cover">
+        {{ bid.cover_letter|truncatechars:120 }}
+      </div>
+
+      <div class="actions">
+
+        {% if bid.status == "PENDING" %}
+          <a href="{% url 'accept_bid' bid.id %}" class="btn accept">Accept</a>
+          <a href="{% url 'reject_bid' bid.id %}" class="btn reject">Reject</a>
+
+        {% elif bid.status == "ACCEPTED" %}
+          <a href="{% url 'start_conversation' bid.id %}" class="btn message">Message</a>
+
         {% else %}
-            <div class="empty">No bids received yet for this gig.</div>
+          <span class="empty">Rejected</span>
         {% endif %}
+
+      </div>
+
     </div>
+
+    {% endfor %}
+
+  </div>
+
+  {% else %}
+
+    <p class="empty">No bids received yet for this gig.</p>
+
+  {% endif %}
+
+</div>
+
 </body>
 </html>

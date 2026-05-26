@@ -1,188 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>View Gigs</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <title>My Gigs — GigHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-        nav {
-            margin-top: 10px;
-        }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #0f172a;
+      color: white;
+    }
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-        }
+    .brand span {
+      color: #38bdf8;
+    }
 
-        h2 {
-            color: #007bff;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    .nav a {
+      display: block;
+      padding: 12px;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+      font-size: 14px;
+    }
 
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
+    .nav a:hover {
+      background: rgba(56,189,248,0.2);
+      color: #38bdf8;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
 
-        th, td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
+    .title {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
 
-        th {
-            background-color: #f0f0f0;
-            color: #333;
-        }
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-        .status {
-            font-weight: bold;
-        }
+    /* CARD */
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      transition: 0.3s;
+    }
 
-        .status.open {
-            color: #0977c0;
-        }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #38bdf8;
+    }
 
-        .status.closed {
-            color: red;
-        }
-        .actions a {
-            color: #0977c0;
-            font-weight: bold;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-        .empty {
-            text-align: center;
-            color: gray;
-            padding: 20px;
-        }
+    .card h3 {
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
 
-        .back_button {
-            display: block;
-            width: fit-content;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 10px 20px;
-            background-color: #0977c0;
-            color: white;
-            border-radius: 17px;
-            font-weight: 500;
-            font-size: 15px;
-            text-decoration: none;
-            border: none;
-            margin: 30px auto 0;
-            cursor: pointer;
-        }
+    .meta {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
 
-        .back_button:hover {
-            background-color: #2991e7;
-        }
+    .desc {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 12px;
+    }
 
-        @media screen and (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+    /* STATUS BADGE */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
 
-            table th, table td {
-                white-space: nowrap;
-            }
+    .open {
+      background: rgba(0,255,0,0.1);
+      color: #38bdf8;
+      border: 1px solid rgba(0,255,0,0.3);
+    }
 
-            nav a {
-                display: block;
-                margin: 10px 0;
-                text-align: center;
-            }
-        }
-    </style>
+    .closed {
+      background: rgba(255,0,0,0.1);
+      color: #ff6b6b;
+      border: 1px solid rgba(255,0,0,0.3);
+    }
+
+    /* BUTTONS */
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .edit {
+      background: #38bdf8;
+      color: black;
+    }
+
+    .edit:hover {
+      background: #0ea5e9;
+    }
+
+    .delete {
+      background: rgba(255,0,0,0.2);
+      color: #ff6b6b;
+      border: 1px solid rgba(255,0,0,0.3);
+    }
+
+    .delete:hover {
+      background: rgba(255,0,0,0.3);
+    }
+
+    .empty {
+      opacity: 0.7;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>My Gigs</h1>
-        <nav>
-            <a href="{% url 'client_dash' %}">Dashboard</a>
-            <a href="{% url 'profile_page' %}">Profile</a>
-            <a href="{% url 'createGig' %}">Post New Gig</a>
-            <a href="{% url 'inbox_view'  %}">Inbox</a>
-            <a href="{% url 'client_orders' %}">Orders</a>
-            <a href="{% url 'client_reviews' %}">Reviews</a>
-            <a href="{% url 'client_logout' %}">Logout</a>
-        </nav>
-    </header>
 
-    <div class="container">
-        {% if gigs %}
-        <div class="table-responsive">
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Budget</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                {% for gig in gigs %}
-                <tr>
-                    <td>{{ gig.title }}</td>
-                    <td>{{ gig.category }}</td>
-                    <td>${{ gig.budget_min }} - ${{ gig.budget_max }}</td>
-                    <td>{{ gig.description }}</td>
-                    <td class="status {% if gig.closed %}closed{% else %}open{% endif %}">
-                       <p>{{ gig.get_status_display }}</p>
-                    </td>
-                    <td class="actions">
-                        {% if gig.status == "OPEN" %}
-                        <a href="{% url 'edit_gig' gig.id %}">Edit</a>
-                        <a href="{% url 'delete_gig' gig.id %}" style="color: red;">Delete</a>
-                        {% else %}
-                        <span style="color: gray;">Already Assigned</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand">Gig<span>Hub</span></div>
+
+  <div class="nav">
+    <a href="{% url 'client_dash' %}">Dashboard</a>
+    <a href="{% url 'profile_page' %}">Profile</a>
+    <a href="{% url 'createGig' %}">Post Gig</a>
+    <a href="{% url 'inbox_view' %}">Inbox</a>
+    <a href="{% url 'client_orders' %}">Orders</a>
+    <a href="{% url 'client_reviews' %}">Reviews</a>
+    <a href="{% url 'client_logout' %}">Logout</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="title">My Gigs</div>
+
+  {% if gigs %}
+
+    <div class="grid">
+
+      {% for gig in gigs %}
+
+      <div class="card">
+
+        <h3>{{ gig.title }}</h3>
+
+        <div class="meta">
+          {{ gig.category }} • ${{ gig.budget_min }} - ${{ gig.budget_max }}
         </div>
-        {% else %}
-            <div class="empty">You haven't posted any gigs yet.</div>
-        {% endif %}
+
+        <div class="badge {% if gig.status == 'OPEN' %}open{% else %}closed{% endif %}">
+          {{ gig.get_status_display }}
+        </div>
+
+        <div class="desc">
+          {{ gig.description }}
+        </div>
+
+        <div class="actions">
+          {% if gig.status == "OPEN" %}
+            <a href="{% url 'edit_gig' gig.id %}" class="btn edit">Edit</a>
+            <a href="{% url 'delete_gig' gig.id %}" class="btn delete">Delete</a>
+          {% else %}
+            <span class="empty">Already Assigned</span>
+          {% endif %}
+        </div>
+
+      </div>
+
+      {% endfor %}
+
     </div>
+
+  {% else %}
+
+    <p class="empty">You haven't posted any gigs yet.</p>
+
+  {% endif %}
+
+</div>
+
 </body>
 </html>

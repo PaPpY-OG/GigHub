@@ -1,141 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Inbox</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <title>Inbox — GigHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-        nav {
-            margin-top: 10px;
-        }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #0f172a;
+      color: white;
+    }
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-        }
+    .brand span {
+      color: #38bdf8;
+    }
 
-        h2 {
-            color: #007bff;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    .nav a {
+      display: block;
+      padding: 12px;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+      font-size: 14px;
+    }
 
-        .conversation-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            background-color: #fafafa;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .nav a:hover {
+      background: rgba(56,189,248,0.2);
+      color: #38bdf8;
+    }
 
-        .conversation-info {
-            font-size: 1rem;
-        }
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
 
-        .conversation-info small {
-            color: #888;
-            font-size: 0.85rem;
-        }
+    .title {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
 
-        .view-button {
-            background-color: #007bff;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
+    /* GRID */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 800px;
+    }
 
-        .empty-message {
-            color: #666;
-            font-size: 0.95rem;
-            text-align: center;
-            margin-top: 20px;
-        }
+    /* CONVERSATION CARD */
+    .card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-        @media screen and (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 16px;
+      transition: 0.3s;
+    }
 
-            nav a {
-                display: block;
-                margin: 10px 0;
-                text-align: center;
-            }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #38bdf8;
+    }
 
-            .conversation-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+    .user {
+      font-size: 16px;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 4px;
+    }
 
-            .view-button {
-                margin-top: 10px;
-                font-size: 14px;
-            }
-        }
-    </style>
+    .meta {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    /* BUTTON */
+    .btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      background: #38bdf8;
+      color: black;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #0ea5e9;
+    }
+
+    .empty {
+      opacity: 0.7;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <nav>
-            <a href="{% url 'client_dash' %}">Dashboard</a>
-            <a href="{% url 'profile_page' %}">Profile</a>
-            <a href="{% url 'createGig' %}">Post New Gig</a>
-            <a href="{% url 'viewGig' %}">My Gigs</a>
-            <a href="{% url 'inbox_view' %}">Inbox</a>
-            <a href="{% url 'client_orders' %}">Orders</a>
-            <a href="{% url 'client_reviews' %}">Reviews</a>
-            <a href="{% url 'client_logout' %}">Logout</a>
-        </nav>
-    </header>
 
-    <div class="container">
-        <h2>Your Conversations</h2>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand">Gig<span>Hub</span></div>
 
-        {% for convo in conversations %}
-            <div class="conversation-card">
-                <div class="conversation-info">
-                    <strong>{{ convo.freelancer.username }}</strong><br>
-                    <small>Started: {{ convo.started_at|date:"M d, Y" }}</small>
-                </div>
-                <a href="{% url 'conversation' convo.id %}" class="view-button">View</a>
-            </div>
-        {% empty %}
-            <p class="empty-message">You have no active conversations yet.</p>
-        {% endfor %}
+  <div class="nav">
+    <a href="{% url 'client_dash' %}">Dashboard</a>
+    <a href="{% url 'profile_page' %}">Profile</a>
+    <a href="{% url 'createGig' %}">Post Gig</a>
+    <a href="{% url 'viewGig' %}">My Gigs</a>
+    <a href="{% url 'client_orders' %}">Orders</a>
+    <a href="{% url 'client_reviews' %}">Reviews</a>
+    <a href="{% url 'client_logout' %}">Logout</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="title">Your Conversations</div>
+
+  {% if conversations %}
+
+  <div class="grid">
+
+    {% for convo in conversations %}
+
+    <div class="card">
+
+      <div>
+        <div class="user">{{ convo.freelancer.username }}</div>
+        <div class="meta">
+          Started: {{ convo.started_at|date:"M d, Y" }}
+        </div>
+      </div>
+
+      <a href="{% url 'conversation' convo.id %}" class="btn">Open Chat</a>
+
     </div>
+
+    {% endfor %}
+
+  </div>
+
+  {% else %}
+
+    <p class="empty">You have no active conversations yet.</p>
+
+  {% endif %}
+
+</div>
+
 </body>
 </html>

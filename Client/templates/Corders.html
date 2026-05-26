@@ -1,194 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>My Orders</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <title>My Orders — GigHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #0f172a;
+      color: white;
+    }
 
-        nav {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+    }
 
-        nav a {
-            color: white;
-            margin: 5px 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .brand span {
+      color: #38bdf8;
+    }
 
-        section {
-            margin: 30px auto;
-            max-width: 900px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+    .nav a {
+      display: block;
+      padding: 12px;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+      font-size: 14px;
+    }
 
-        section h2 {
-            margin-top: 0;
-            color: #007bff;
-            text-align: center;
-        }
+    .nav a:hover {
+      background: rgba(56,189,248,0.2);
+      color: #38bdf8;
+    }
 
-        .order-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            background-color: #fafafa;
-        }
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
 
-        .order-card h3 {
-            margin: 0 0 10px;
-            color: #333;
-        }
+    .title {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #38bdf8;
+    }
 
-        .order-card p {
-            margin: 5px 0;
-        }
+    /* GRID */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 900px;
+    }
 
-        .order-card p strong {
-            color: #007bff;
-            font-weight: bold;
-        }
+    /* ORDER CARD */
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 16px;
+      transition: 0.3s;
+    }
 
-        .order-card form {
-            margin-top: 10px;
-        }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: #38bdf8;
+    }
 
-        .order-card button,
-        .order-card a.button-link {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
+    .gig-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
 
-        .order-card button:hover,
-        .order-card a.button-link:hover {
-            background-color: #0056b3;
-        }
+    .meta {
+      font-size: 13px;
+      opacity: 0.8;
+      margin: 3px 0;
+    }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 22px;
-            }
+    /* STATUS BADGES */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
 
-            nav a {
-                font-size: 12px;
-                margin: 5px;
-            }
+    .in_progress {
+      background: #facc15;
+      color: black;
+    }
 
-            section {
-                padding: 15px;
-                margin: 20px auto;
-            }
+    .delivered {
+      background: #22c55e;
+      color: black;
+    }
 
-            section h2 {
-                font-size: 20px;
-            }
+    .closed {
+      background: #ef4444;
+      color: white;
+    }
 
-            .order-card {
-                padding: 12px;
-            }
+    /* BUTTON */
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: #38bdf8;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 13px;
+      transition: 0.3s;
+      border: none;
+      cursor: pointer;
+    }
 
-            .order-card h3 {
-                font-size: 18px;
-            }
+    .btn:hover {
+      background: #0ea5e9;
+    }
 
-            .order-card p {
-                font-size: 14px;
-            }
+    .empty {
+      opacity: 0.7;
+      font-size: 14px;
+      margin-top: 20px;
+    }
 
-            .order-card button,
-            .order-card a.button-link {
-                font-size: 13px;
-                padding: 7px 14px;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <nav>
-            <a href="{% url 'client_dash' %}">Dashboard</a>
-            <a href="{% url 'profile_page' %}">Profile</a>
-            <a href="{% url 'createGig' %}">Post New Gig</a>
-            <a href="{% url 'inbox_view'  %}">Inbox</a>
-            <a href="{% url 'client_orders' %}">Orders</a>
-            <a href="{% url 'client_reviews' %}">Reviews</a>
-            <a href="{% url 'client_logout' %}">Logout</a>
-        </nav>
-    </header>
 
-    <section class="orders">
-        <h2>My Orders</h2>
-        {% for order in orders %}
-            <div class="order-card">
-                <h3>{{ order.gig.title }}</h3>
-                <p><strong>Category:</strong> {{ order.gig.category }}</p>
-                <p><strong>Freelancer:</strong> {{ order.freelancer.username }}</p>
-                <p><strong>Amount:</strong> ${{ order.agreed_amount }}</p>
-                <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
-                <p><strong>Status:</strong> {{ order.status }}</p>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand">Gig<span>Hub</span></div>
 
-                {% if order.status == 'DELIVERED' %}
-                    <form method="POST" action="{% url 'mark_completed' order.id %}">
-                        {% csrf_token %}
-                        <button type="submit">Mark as Completed</button>
-                    </form>
-                {% elif order.status == 'IN_PROGRESS' %}
-                    <span>Waiting for freelancer delivery</span>
-                {% elif order.status == 'CLOSED' %}
-                    {% if order.review %}
-                        <a href="{% url 'edit_review' order.review.id %}" class="button-link">Edit Review</a>
-                    {% else %}
-                        <form method="GET" action="{% url 'submit_review' order.id %}">
-                            <button type="submit">Leave a Review</button>
-                        </form>
-                    {% endif %}
-                {% endif %}
-            </div>
-        {% empty %}
-            <p>You have no active orders yet.</p>
-        {% endfor %}
-    </section>
+  <div class="nav">
+    <a href="{% url 'client_dash' %}">Dashboard</a>
+    <a href="{% url 'profile_page' %}">Profile</a>
+    <a href="{% url 'createGig' %}">Post Gig</a>
+    <a href="{% url 'viewGig' %}">My Gigs</a>
+    <a href="{% url 'inbox_view' %}">Inbox</a>
+    <a href="{% url 'client_reviews' %}">Reviews</a>
+    <a href="{% url 'client_logout' %}">Logout</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="title">My Orders</div>
+
+  {% if orders %}
+
+  <div class="grid">
+
+    {% for order in orders %}
+
+    <div class="card">
+
+      <div class="gig-title">{{ order.gig.title }}</div>
+
+      <div class="meta"><strong>Category:</strong> {{ order.gig.category }}</div>
+      <div class="meta"><strong>Freelancer:</strong> {{ order.freelancer.username }}</div>
+      <div class="meta"><strong>Amount:</strong> ${{ order.agreed_amount }}</div>
+      <div class="meta"><strong>Delivery:</strong> {{ order.bid.days }} days</div>
+
+      <!-- STATUS -->
+      <div class="badge {{ order.status|lower }}">
+        {{ order.status }}
+      </div>
+
+      <!-- ACTIONS -->
+      {% if order.status == 'DELIVERED' %}
+        <form method="POST" action="{% url 'mark_completed' order.id %}">
+          {% csrf_token %}
+          <button class="btn" type="submit">Mark as Completed</button>
+        </form>
+
+      {% elif order.status == 'IN_PROGRESS' %}
+        <div class="meta">Waiting for freelancer delivery...</div>
+
+      {% elif order.status == 'CLOSED' %}
+        {% if order.review %}
+          <a class="btn" href="{% url 'edit_review' order.review.id %}">Edit Review</a>
+        {% else %}
+          <form method="GET" action="{% url 'submit_review' order.id %}">
+            <button class="btn" type="submit">Leave Review</button>
+          </form>
+        {% endif %}
+      {% endif %}
+
+    </div>
+
+    {% endfor %}
+
+  </div>
+
+  {% else %}
+    <p class="empty">You have no active orders yet.</p>
+  {% endif %}
+
+</div>
+
 </body>
 </html>

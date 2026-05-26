@@ -4,114 +4,168 @@
     <meta charset="UTF-8">
     <title>Freelancer Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        header {
-            background-color: #007bff;
+            background: #0f172a;
             color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        nav {
-            margin-top: 10px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            min-height: 100vh;
         }
 
-        nav a {
-            color: white;
-            margin: 5px 10px;
-            text-decoration: none;
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .brand {
+            font-size: 22px;
             font-weight: bold;
-            font-size: 14px;
+            margin-bottom: 30px;
         }
 
-        nav a:hover {
-            text-decoration: underline;
+        .brand span {
+            color: #38bdf8;
         }
 
-        section {
-            margin: 20px auto;
-            max-width: 90%;
-            background-color: white;
-            padding: 15px;
+        .nav a {
+            display: block;
+            padding: 12px;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
 
-        section h2 {
-            margin-top: 0;
-            color: #007bff;
-            font-size: 20px;
+        .nav a:hover {
+            background: rgba(56,189,248,0.2);
+            color: #38bdf8;
         }
 
-        .summary ul {
-            list-style: none;
-            padding: 0;
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 30px;
         }
 
-        .summary li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 16px;
+        .topbar {
+            margin-bottom: 30px;
         }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 20px;
-            }
+        .topbar h1 {
+            font-size: 28px;
+        }
 
-            nav a {
-                font-size: 12px;
-                margin: 5px;
-            }
+        .topbar span {
+            color: #38bdf8;
+        }
 
-            section {
-                padding: 10px;
-            }
+        /* CARD */
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            transition: 0.3s;
+            max-width: 400px;
+        }
 
-            section h2 {
-                font-size: 18px;
-            }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+        }
 
-            .summary li {
-                font-size: 14px;
+        .card h2 {
+            color: #38bdf8;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
             }
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <h1>Welcome, {{ user.username |first | upper }} </h1>
-        <nav>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="brand">Gig<span>Hub</span></div>
+
+        <div class="nav">
             <a href="{% url 'Fprofile_page' %}">Profile</a>
             <a href="{% url 'active_gigs' %}">Active Gigs</a>
             <a href="{% url 'my_bids' %}">My Bids</a>
             <a href="{% url 'freelancer_orders' %}">Orders</a>
             <a href="{% url 'message_view' %}">Inbox</a>
+            <a href="{% url 'freelancer_reviews' %}">Reviews</a>
             <a href="{% url 'freelancer_logout' %}">Logout</a>
-        </nav>
-    </header>
+        </div>
+    </div>
+<!-- MAIN -->
+<div class="main">
 
-    <section class="summary">
-        <h2>Dashboard Summary</h2>
-        <ul>
-             <li>Total Orders Taken: {{ total_orders }}</li>
-        </ul>
-    </section>
+    <div class="topbar">
+        <h1>Welcome, <span>{{ user.username|upper }}</span></h1>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin-bottom:30px;">
+
+        <div class="card">
+            <h2>Total Orders</h2>
+            <p>{{ total_orders }}</p>
+        </div>
+
+        <div class="card">
+            <h2 href="{% url 'my_bids' %}">Active Bids</h2>
+            <p>{{ active_bids }}</p>
+        </div>
+
+        <div class="card">
+            <h2>Pending Jobs</h2>
+            <p>{{ pending_jobs }}</p>
+        </div>
+
+        <div class="card">
+            <h2>Messages</h2>
+            <p>{{ unread_messages }}</p>
+        </div>
+
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <h2 style="margin-bottom:15px; color:#38bdf8;">Recent Activity</h2>
+
+    <div style="display:grid; gap:15px;">
+
+        <div class="card">
+            <h2>Latest Order</h2>
+            <p>You currently have {{ total_orders }} orders in progress.</p>
+        </div>
+
+        <div class="card">
+            <h2>Bidding Status</h2>
+            <p>Keep applying to gigs to increase your chances of getting hired.</p>
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>

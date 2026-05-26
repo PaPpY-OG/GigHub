@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from Client.models import Profile, Order, Bid, Gig, Conversation, Message
+from Client.models import Profile, Order, Bid, Gig, Conversation, Message, Review
 from django.http import HttpResponseForbidden
 from django.db.models import Q
 
@@ -185,6 +185,11 @@ def conversations(request, convo_id):
 def message_view(request):
     conversations = Conversation.objects.filter(Q(client=request.user) | Q(freelancer=request.user)).order_by('-updated_at')
     return render(request, 'message.html', {'conversations': conversations})
+
+@login_required(login_url='freelancerloginPage')
+def freelancer_reviews(request):
+    reviews = Review.objects.filter(freelancer=request.user).order_by('-created_at')
+    return render(request,'reviews.html',{'reviews': reviews})
 
 @login_required(login_url='freelancerloginPage')
 def freelancerLogout(request: HttpRequest):

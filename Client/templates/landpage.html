@@ -4,76 +4,143 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GigHub — Freelance Marketplace</title>
+
   <link rel="shortcut icon" href="/DJANGO_CLASS/Gighub/Client/logos/favicon.png" type="image/x-icon">
+
   <style>
     * {
-      box-sizing: border-box;
-    }
-    body {
-      background: white;
       margin: 0;
       padding: 0;
-    }
-    .container {
-      border-radius: 25px;
-      box-shadow: 0 0 25px rgba(3, 34, 209, 0.3);
+      box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
-      width: 350px;
-      margin: 100px auto;
-      text-align: center;
-      padding: 40px 30px;
-    }
-    .container h2 {
-      margin-bottom: 15px;
-      color: #0977c0;
-    }
-    .container p {
-      margin: 10px 0;
-      color: #0977c0;
-    }
-    .btn-group {
-      margin-top: 20px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 28px;
-      margin: 0 10px;
-      border: none;
-      border-radius: 8px;
-      background-color: #0977c0;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .btn:hover {
-      background-color: rgb(41, 145, 231);
     }
 
-    /* Mobile responsiveness */
-    @media (max-width: 400px) {
-      .container {
-        width: 90%;
-        margin: 60px auto;
-        padding: 30px 20px;
-      }
-      .btn {
-        padding: 10px 20px;
-        margin: 5px;
-        font-size: 14px;
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .wrapper {
+      text-align: center;
+      max-width: 900px;
+      padding: 40px;
+    }
+
+    .brand {
+      font-size: 42px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .brand span {
+      color: #38bdf8;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      opacity: 0.85;
+      margin-bottom: 40px;
+    }
+
+    .card-container {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      width: 280px;
+      padding: 30px;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: #38bdf8;
+    }
+
+    .card p {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: #38bdf8;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #0ea5e9;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 700px) {
+      .card-container {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h2>Wagwan MyGee!</h2>
-    <p>Welcome to Pappy GigHub</p>
-    <p>Who are you?</p>
-    <div class="btn-group">
-      <a href="/client/signup/" class="btn">Client</a>
-      <a href="/freelancer/signup/" class="btn">Freelancer</a>
+
+  <div class="wrapper">
+
+    <div class="brand">Gig<span>Hub</span></div>
+    <div class="subtitle">A modern freelance marketplace connecting clients and talented freelancers</div>
+
+    <div class="card-container">
+
+      <div class="card">
+        <h3>Client</h3>
+        <p>Post jobs, hire skilled freelancers, and manage your projects easily.</p>
+        <a href="/client/signup/" class="btn">Get Started</a>
+      </div>
+
+      <div class="card">
+        <h3>Freelancer</h3>
+        <p>Find high-quality gigs, showcase your skills, and earn money online.</p>
+        <a href="/freelancer/signup/" class="btn">Join Now</a>
+      </div>
+
     </div>
+
+    <div class="footer">
+      © 2025 GigHub — Built with Django  by Adebayo Goodness. All rights reserved.
+    </div>
+
   </div>
+
 </body>
 </html>

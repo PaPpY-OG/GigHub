@@ -3,37 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Client Signup</title>
+  <title>Client Signup — GigHub</title>
+
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f5f5f5;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: white;
       padding: 20px;
     }
 
-    h1, p {
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    h1 span {
+      color: #38bdf8;
+    }
+
+    p {
+      opacity: 0.8;
+      margin-bottom: 25px;
       text-align: center;
-      color: #0977c0;;
     }
 
     .container {
-      border: #0977c0;;
-      padding: 30px 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px rgba(3, 34, 209, 0.3);
       width: 100%;
-      max-width: 400px;
-      margin-top: 20px;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     form {
@@ -41,92 +56,99 @@
       flex-direction: column;
     }
 
-    .label {
-      margin-bottom: 8px;
-      color: gray;
-      font-size: 17px;
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      opacity: 0.9;
     }
 
-    .input {
-      border: none;
-      border-bottom: 1px solid #333;
-      padding: 10px 5px;
-      font-size: 16px;
-      margin-bottom: 25px;
-      width: 100%;
-    }
-
-    .submit {
-      background-color: #0977c0;
-      color: white;
+    input {
       padding: 12px;
-      font-size: 16px;
-      border-radius: 10px;
+      margin-bottom: 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.2);
+      color: white;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn {
+      background: #38bdf8;
+      color: black;
+      padding: 12px;
       border: none;
+      border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: 0.3s;
+      margin-top: 10px;
     }
 
-    .submit:hover {
-      background-color: rgb(41, 145, 231);
-    }
-    .acct {
-        display: block;
-        margin-top: 20px;
-        text-align: center;
-        color: #555;
-        text-decoration: none;
-        font-size: 14px;
-        transition: color 0.3s ease;
+    .btn:hover {
+      background: #0ea5e9;
+      transform: translateY(-2px);
     }
 
-    .acct:hover {
-        color: #0977c0;
-        text-decoration: underline;
+    .link {
+      display: block;
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
     }
-/* 
-    @media (max-width: 500px) {
-      .container {
-        padding: 20px 15px;
-      }
 
-      .input {
-        font-size: 14px;
-      }
+    .link:hover {
+      color: #38bdf8;
+    }
 
-      .label {
-        font-size: 15px;
-      }
+    .brand {
+      position: absolute;
+      top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-      .submit {
-        font-size: 14px;
-      }
-    } */
+    .brand span {
+      color: #38bdf8;
+    }
   </style>
 </head>
+
 <body>
-  <h1>CLIENT SIGN UP</h1>
-  <p>Welcome to the sign up page</p>
+
+  <div class="brand">Gig<span>Hub</span></div>
+
+  <p>Create an account to start hiring talented freelancers</p>
 
   {% if error %}
-    <h4 style="color: red; text-align: center;">{{ error }}</h4>
+    <p style="color: #ff6b6b;">{{ error }}</p>
   {% endif %}
 
   <div class="container">
-    <form action="" method="POST">
+    <form method="POST">
       {% csrf_token %}
-      <label class="label" for="email">Email:</label>
-      <input class="input" type="email" name="email" required />
 
-      <label class="label" for="password1">Password:</label>
-      <input class="input" type="password" name="password1" required />
+      <label>Email</label>
+      <input type="email" name="email" required />
 
-      <label class="label" for="password2">Confirm Password:</label>
-      <input class="input" type="password" name="password2" required />
+      <label>Password</label>
+      <input type="password" name="password1" required />
 
-      <input class="submit" type="submit" value="Sign up" />
-      <a class="acct" href="/client/login/">Already have an account? Login</a>
+      <label>Confirm Password</label>
+      <input type="password" name="password2" required />
+
+      <button class="btn" type="submit">Create Account</button>
     </form>
+
+    <a class="link" href="/client/login/">Already have an account? Login</a>
   </div>
+
 </body>
 </html>

@@ -1,234 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Client's Profile</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        :root {
-            --primary: #007bff;
-            --secondary: #f4f4f4;
-            --text: #333;
-            --border: #ddd;
-        }
+  <meta charset="UTF-8">
+  <title>Profile — GigHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--secondary);
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #0f172a;
+      color: white;
+    }
 
-        h2 {
-            margin-top: 0;
-            color: var(--primary);
-        }
+    /* SIDEBAR (same as dashboard for consistency) */
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+    }
 
-        .profile-photo {
-            width: 130px;
-            height: 130px;
-            margin-bottom: 20px;
-        }
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .brand span {
+      color: #38bdf8;
+    }
 
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text);
-        }
+    .nav a {
+      display: block;
+      padding: 12px;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+      font-size: 14px;
+    }
 
-        input[type="text"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 15px;
-        }
+    .nav a:hover {
+      background: rgba(56,189,248,0.2);
+      color: #38bdf8;
+    }
 
-        input[type="file"] {
-            padding: 5px;
-        }
+    /* MAIN CONTENT */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
 
-        button {
-            background-color: var(--primary);
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            cursor: pointer;
-        }
+    .title {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+    /* PROFILE CARD */
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      max-width: 600px;
+    }
 
-        .alert {
-            background-color: #ffeeba;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-            color: #856404;
-        }
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #38bdf8;
+      margin-bottom: 15px;
+    }
 
-        .profile-info p {
-            margin: 8px 0;
-            color: var(--text);
-        }
+    h2 {
+      margin-bottom: 5px;
+    }
 
-        .edit-button {
-            margin-top: 20px;
-        }
+    .role {
+      color: #38bdf8;
+      margin-bottom: 10px;
+    }
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+    .bio {
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      background: #38bdf8;
+      color: black;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-        nav {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    .btn:hover {
+      background: #0ea5e9;
+      transform: translateY(-2px);
+    }
 
-        nav a {
-            color: white;
-            margin: 5px 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
+    /* FORM */
+    .form-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 25px;
+      max-width: 600px;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .alert {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      color: #ffd166;
+    }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-                margin: 20px auto;
-            }
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
 
-            header h1 {
-                font-size: 22px;
-            }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.2);
+      color: white;
+      outline: none;
+      margin-bottom: 12px;
+    }
 
-            nav a {
-                font-size: 12px;
-                margin: 5px;
-            }
+    input:focus, textarea:focus, select:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    }
 
-            h2 {
-                font-size: 20px;
-            }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #38bdf8;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-            .profile-photo {
-                width: 100px;
-                height: 100px;
-            }
+    button:hover {
+      background: #0ea5e9;
+    }
 
-            button {
-                font-size: 14px;
-                padding: 10px 16px;
-            }
-
-            .alert {
-                font-size: 14px;
-            }
-
-            .profile-info p {
-                font-size: 14px;
-            }
-
-            label {
-                font-size: 14px;
-            }
-
-            input[type="text"],
-            textarea,
-            select {
-                font-size: 14px;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <h1>Profile</h1>
-        <nav>
-            <a href="{% url 'client_dash' %}">Dashboard</a>
-            <a href="{% url 'viewGig' %}">My Gigs</a>
-            <a href="{% url 'createGig' %}">Post New Gig</a>
-            <a href="{% url 'inbox_view'  %}">Inbox</a>
-            <a href="{% url 'client_orders' %}">Orders</a>
-            <a href="{% url 'client_reviews' %}">Reviews</a>
-            <a href="{% url 'client_logout' %}">Logout</a>
-        </nav>
-    </header><br>
-    <div class="container">
-        {% if is_complete %}
-            <h2>{{ profile.user.get_full_name|default:profile.user.username }}</h2>
-            {% if profile.photo %}
-                <img src="{{ profile.photo.url }}" alt="Profile Photo" class="profile-photo">
-            {% else %}
-                <img src="/car.jpeg" alt="Default Photo" class="profile-photo">
-            {% endif %}
-            <div class="profile-info">
-                <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
-                <p><strong>Bio:</strong> {{ profile.bio }}</p>
-            </div>
-            <div class="edit-button">
-                <a href="{% url 'edit_profile' %}"><button>Edit Profile</button></a>
-            </div>
-        {% else %}
-            <div class="alert">
-                <strong>Heads up!</strong> Your profile is incomplete. Fill in your details below.
-            </div>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <select name="role" id="role" required>
-                        <option value="">Select Role</option>
-                        <option value="CLIENT" {% if profile.role == 'CLIENT' %}selected{% endif %}>Client</option>
-                        <option value="FREELANCER" {% if profile.role == 'FREELANCER' %}selected{% endif %}>Freelancer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="bio">Bio</label>
-                    <textarea name="bio" id="bio" rows="4" required>{{ profile.bio }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="photo">Profile Photo</label>
-                    <input type="file" name="photo" id="photo">
-                </div>
-                <button type="submit">Save Profile</button>
-            </form>
-        {% endif %}
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand">Gig<span>Hub</span></div>
+
+  <div class="nav">
+    <a href="{% url 'client_dash' %}">Dashboard</a>
+    <a href="{% url 'viewGig' %}">My Gigs</a>
+    <a href="{% url 'createGig' %}">Post Gig</a>
+    <a href="{% url 'inbox_view' %}">Inbox</a>
+    <a href="{% url 'client_orders' %}">Orders</a>
+    <a href="{% url 'client_reviews' %}">Reviews</a>
+    <a href="{% url 'client_logout' %}">Logout</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="title">Profile</div>
+
+  {% if is_complete %}
+
+    <div class="card">
+
+      {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" class="profile-photo">
+      {% else %}
+        <img src="/car.jpeg" class="profile-photo">
+      {% endif %}
+
+      <h2>{{ profile.user.get_full_name|default:profile.user.username }}</h2>
+      <div class="role">{{ profile.get_role_display }}</div>
+      <div class="bio">{{ profile.bio }}</div>
+
+      <a href="{% url 'edit_profile' %}" class="btn">Edit Profile</a>
+
     </div>
+
+  {% else %}
+
+    <div class="form-card">
+
+      <div class="alert">
+        Your profile is incomplete. Please complete your profile.
+      </div>
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Role</label>
+        <select name="role" required>
+          <option value="">Select Role</option>
+          <option value="CLIENT">Client</option>
+          <option value="FREELANCER">Freelancer</option>
+        </select>
+
+        <label>Bio</label>
+        <textarea name="bio" rows="4" required></textarea>
+
+        <label>Profile Photo</label>
+        <input type="file" name="photo">
+
+        <button type="submit">Save Profile</button>
+      </form>
+
+    </div>
+
+  {% endif %}
+
+</div>
+
 </body>
 </html>

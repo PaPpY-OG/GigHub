@@ -1,176 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Client Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <title>Client Dashboard — GigHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+    body {
+      background: #0f172a;
+      color: white;
+      display: flex;
+      min-height: 100vh;
+    }
 
-        nav {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
 
-        nav a {
-            color: white;
-            margin: 5px 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .brand span {
+      color: #38bdf8;
+    }
 
-        section {
-            margin: 30px auto;
-            max-width: 900px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+    .nav a {
+      display: block;
+      padding: 12px;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
 
-        section h2 {
-            margin-top: 0;
-            color: #007bff;
-        }
+    .nav a:hover {
+      background: rgba(56,189,248,0.2);
+      color: #38bdf8;
+    }
 
-        .summary ul {
-            list-style: none;
-            padding: 0;
-        }
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
 
-        .summary li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
+    .topbar {
+      margin-bottom: 30px;
+    }
 
-        .bid-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            background-color: #fafafa;
-        }
+    .topbar h1 {
+      font-size: 28px;
+    }
 
-        .bid-card h3 {
-            margin: 0 0 10px;
-            color: #333;
-        }
+    .topbar span {
+      color: #38bdf8;
+    }
 
-        .bid-card p {
-            margin: 5px 0;
-        }
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
 
-        .bid-card a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-        }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
 
-        .bid-card a:hover {
-            text-decoration: underline;
-        }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #38bdf8;
+    }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 22px;
-            }
+    .card h3 {
+      color: #38bdf8;
+      margin-bottom: 10px;
+    }
 
-            nav a {
-                font-size: 12px;
-                margin: 5px;
-            }
+    /* BIDS */
+    .section-title {
+      margin: 20px 0;
+      font-size: 20px;
+    }
 
-            section {
-                padding: 15px;
-                margin: 20px auto;
-            }
+    .bids {
+      display: grid;
+      gap: 15px;
+    }
 
-            section h2 {
-                font-size: 20px;
-            }
+    .bid {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 18px;
+      border-radius: 12px;
+    }
 
-            .summary li {
-                font-size: 14px;
-            }
+    .bid h4 {
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
 
-            .bid-card {
-                padding: 12px;
-            }
+    .bid p {
+      opacity: 0.85;
+      margin: 4px 0;
+    }
 
-            .bid-card h3 {
-                font-size: 18px;
-            }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: #38bdf8;
+      color: black;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-            .bid-card p {
-                font-size: 14px;
-            }
+    .btn:hover {
+      background: #0ea5e9;
+    }
 
-            .bid-card a {
-                font-size: 14px;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <h1>Welcome, {{ user.username |first | upper }} </h1>
-        <nav>
-            <a href="{% url 'profile_page' %}">Profile</a>
-            <a href="{% url 'createGig' %}">Post New Gig</a>
-            <a href="{% url 'viewGig' %}">My Gigs</a>
-            <a href="{% url 'inbox_view'  %}">Inbox</a>
-            <a href="{% url 'client_orders' %}">Orders</a>
-            <a href="{% url 'client_reviews' %}">Reviews</a>
-            <a href="{% url 'client_logout' %}">Logout</a>
-        </nav>
-    </header>
 
-    <section class="summary">
-        <h2>Dashboard Summary</h2>
-        <ul>
-             <li>Total Gigs Posted: {{ total_gigs }}</li>
-        </ul>
-    </section>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="brand">Gig<span>Hub</span></div>
 
-    <section class="recent-bids">
-        <h2>Recent Bids on Your Gigs</h2>
-        {% for bid in recent_bids %}
-            <div class="bid-card">
-                <h3>{{ bid.gig.title }}</h3>
-                <p>Freelancer: {{ bid.freelancer.username }}</p>
-                <p>Amount: ${{ bid.amount }}</p>
-                <p>Days: {{ bid.days }}</p>
-                <a href="{% url 'view_bids_for_gig' bid.gig.id %}">View Bid</a>
-            </div>
-        {% empty %}
-            <p>No recent bids.</p>
-        {% endfor %}
-    </section>
+    <div class="nav">
+      <a href="{% url 'profile_page' %}">Profile</a>
+      <a href="{% url 'createGig' %}">Post Gig</a>
+      <a href="{% url 'viewGig' %}">My Gigs</a>
+      <a href="{% url 'inbox_view' %}">Inbox</a>
+      <a href="{% url 'client_orders' %}">Orders</a>
+      <a href="{% url 'client_reviews' %}">Reviews</a>
+      <a href="{% url 'client_logout' %}">Logout</a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="topbar">
+      <h1>Welcome, <span>{{ user.username|upper }}</span></h1>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="card">
+        <h3>Total Gigs</h3>
+        <p>{{ total_gigs }}</p>
+      </div>
+    </div>
+
+    <!-- BIDS -->
+    <h2 class="section-title">Recent Bids</h2>
+
+    <div class="bids">
+      {% for bid in recent_bids %}
+        <div class="bid">
+          <h4>{{ bid.gig.title }}</h4>
+          <p>Freelancer: {{ bid.freelancer.username }}</p>
+          <p>Amount: ${{ bid.amount }}</p>
+          <p>Duration: {{ bid.days }} days</p>
+          <a class="btn" href="{% url 'view_bids_for_gig' bid.gig.id %}">View Bid</a>
+        </div>
+      {% empty %}
+        <p>No recent bids yet.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+
 </body>
 </html>

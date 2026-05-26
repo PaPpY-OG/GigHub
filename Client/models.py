@@ -68,7 +68,6 @@ class Conversation(models.Model):
     started_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
 class Message(models.Model):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)

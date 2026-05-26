@@ -4,135 +4,159 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>My Bids</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        header {
-            background-color: #007bff;
+        body {
+            background: #0f172a;
             color: white;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
             padding: 20px;
-            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.1);
         }
 
-        nav {
-            margin-top: 10px;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
+        .brand {
+            font-size: 22px;
             font-weight: bold;
+            margin-bottom: 30px;
         }
 
-        nav a:hover {
-            text-decoration: underline;
+        .brand span {
+            color: #38bdf8;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background-color: white;
+        .nav a {
+            display: block;
+            padding: 12px;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            background: rgba(56,189,248,0.2);
+            color: #38bdf8;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
         }
 
         h2 {
-            color: #007bff;
+            color: #38bdf8;
             margin-bottom: 20px;
-            text-align: center;
         }
 
-        .table-responsive {
-            width: 100%;
+        /* TABLE WRAPPER */
+        .table-container {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            min-width: 700px;
         }
 
         th, td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
+            padding: 14px;
             text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
         }
 
         th {
-            background-color: #f0f0f0;
-            color: #333;
+            color: #38bdf8;
+            background: rgba(255,255,255,0.03);
         }
 
-        .status {
-            font-weight: bold;
-        }
-
+        /* STATUS */
         .status.pending {
-            color: orange;
+            color: #fbbf24;
+            font-weight: bold;
         }
 
         .status.accepted {
-            color: green;
+            color: #38bdf8;
+            font-weight: bold;
         }
 
         .status.rejected {
-            color: red;
+            color: #f87171;
+            font-weight: bold;
         }
 
+        /* ACTION LINKS */
         .actions a {
-            color: #007bff;
+            color: #38bdf8;
             text-decoration: none;
             font-weight: bold;
             margin-right: 10px;
+            font-size: 13px;
         }
 
         .actions a:hover {
             text-decoration: underline;
         }
 
-        @media screen and (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+        .empty {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            padding: 20px;
+        }
 
-            table th, table td {
-                white-space: nowrap;
-            }
-
-            nav a {
-                display: block;
-                margin: 10px 0;
-                text-align: center;
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
             }
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <nav>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="brand">Gig<span>Hub</span></div>
+
+        <div class="nav">
             <a href="{% url 'freelancer_dash' %}">Dashboard</a>
             <a href="{% url 'Fprofile_page' %}">Profile</a>
             <a href="{% url 'active_gigs' %}">Active Gigs</a>
             <a href="{% url 'freelancer_orders' %}">Orders</a>
             <a href="{% url 'message_view' %}">Inbox</a>
             <a href="{% url 'freelancer_logout' %}">Logout</a>
-        </nav>
-    </header>
+        </div>
+    </div>
 
-    <div class="container">
+    <!-- MAIN -->
+    <div class="main">
+
         <h2>Your Submitted Bids</h2>
 
         {% if bids %}
-        <div class="table-responsive">
+        <div class="table-container">
             <table>
                 <tr>
                     <th>Gig Title</th>
@@ -142,6 +166,7 @@
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
+
                 {% for bid in bids %}
                 <tr>
                     <td>{{ bid.gig.title }}</td>
@@ -156,7 +181,7 @@
                         {% elif bid.status == "ACCEPTED" %}
                             <a href="{% url 'start_convo' bid.id %}">Message</a>
                         {% else %}
-                            <span style="color: gray;">Already Assigned</span>
+                            <span style="color: rgba(255,255,255,0.4);">Closed</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -164,8 +189,10 @@
             </table>
         </div>
         {% else %}
-            <p style="text-align: center; color: gray;">You haven't placed any bids yet.</p>
+            <p class="empty">You haven't placed any bids yet.</p>
         {% endif %}
+
     </div>
+
 </body>
 </html>

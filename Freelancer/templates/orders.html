@@ -4,177 +4,165 @@
     <meta charset="UTF-8">
     <title>My Orders</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
+        * {
             margin: 0;
             padding: 0;
-            color: #333;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        header {
-            background-color: #007bff;
+        body {
+            background: #0f172a;
             color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        nav {
-            margin-top: 10px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            min-height: 100vh;
         }
 
-        nav a {
-            color: white;
-            margin: 5px 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        section {
-            margin: 30px auto;
-            max-width: 900px;
-            background-color: white;
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-right: 1px solid rgba(255,255,255,0.1);
         }
 
-        section h2 {
-            margin-top: 0;
-            color: #007bff;
+        .brand {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .brand span {
+            color: #38bdf8;
+        }
+
+        .nav a {
+            display: block;
+            padding: 12px;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            background: rgba(56,189,248,0.2);
+            color: #38bdf8;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        h2 {
             text-align: center;
+            color: #38bdf8;
+            margin-bottom: 25px;
+        }
+
+        .orders-grid {
+            display: grid;
+            gap: 15px;
+            max-width: 900px;
+            margin: auto;
         }
 
         .order-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            background-color: #fafafa;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-2px);
+            border-color: #38bdf8;
         }
 
         .order-card h3 {
-            margin: 0 0 10px;
-            color: #333;
+            color: #38bdf8;
+            margin-bottom: 10px;
         }
 
         .order-card p {
-            margin: 5px 0;
-        }
-
-        .order-card p strong {
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .order-card form {
-            margin-top: 10px;
-        }
-
-        .order-card button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
+            margin: 6px 0;
             font-size: 14px;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .order-card strong {
+            color: #fff;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            background: #38bdf8;
+            color: black;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: 0.3s;
         }
 
-        .order-card button:hover {
-            background-color: #0056b3;
+        button:hover {
+            background: #0ea5e9;
         }
 
-        .order-card a {
-            display: inline-block;
+        .status-text {
             margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
+            font-size: 13px;
+            color: #94a3b8;
         }
 
-        .order-card a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 22px;
-            }
-
-            nav a {
-                font-size: 12px;
-                margin: 5px;
-            }
-
-            section {
-                padding: 15px;
-                margin: 20px auto;
-            }
-
-            section h2 {
-                font-size: 20px;
-            }
-
-            .order-card {
-                padding: 12px;
-            }
-
-            .order-card h3 {
-                font-size: 18px;
-            }
-
-            .order-card p {
-                font-size: 14px;
-            }
-
-            .order-card a {
-                font-size: 14px;
-            }
-
-            .order-card button {
-                font-size: 13px;
-                padding: 7px 14px;
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
             }
         }
     </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="{% url 'freelancer_dash' %}">Dashboard</a>
-            <a href="{% url 'Fprofile_page' %}">Profile</a>
-            <a href="{% url 'active_gigs' %}">Active Gigs</a>
-            <a href="{% url 'my_bids' %}">My Bids</a>
-            <a href="{% url 'message_view' %}">Inbox</a>
-            <a href="{% url 'freelancer_logout' %}">Logout</a>
-        </nav>
-    </header>
 
-    <section class="orders">
-        <h2>My Orders</h2>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="brand">Gig<span>Hub</span></div>
+
+    <div class="nav">
+        <a href="{% url 'freelancer_dash' %}">Dashboard</a>
+        <a href="{% url 'Fprofile_page' %}">Profile</a>
+        <a href="{% url 'active_gigs' %}">Active Gigs</a>
+        <a href="{% url 'my_bids' %}">My Bids</a>
+        <a href="{% url 'freelancer_orders' %}">Orders</a>
+        <a href="{% url 'message_view' %}">Inbox</a>
+        <a href="{% url 'freelancer_logout' %}">Logout</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <h2>My Orders</h2>
+
+    <div class="orders-grid">
+
         {% for order in orders %}
             <div class="order-card">
                 <h3>{{ order.gig.title }}</h3>
+
                 <p><strong>Category:</strong> {{ order.gig.category }}</p>
                 <p><strong>Client:</strong> {{ order.gig.client.username }}</p>
                 <p><strong>Amount:</strong> ${{ order.agreed_amount }}</p>
-                <p><strong>Delivery Time:</strong> {{ order.bid.days }} days</p>
+                <p><strong>Delivery:</strong> {{ order.bid.days }} days</p>
                 <p><strong>Status:</strong> {{ order.status }}</p>
 
                 {% if order.status == 'IN PROGRESS' %}
@@ -182,15 +170,21 @@
                         {% csrf_token %}
                         <button type="submit">Mark as Delivered</button>
                     </form>
+
                 {% elif order.status == 'DELIVERED' %}
-                    <span>Waiting for client approval</span>
+                    <div class="status-text">Waiting for client approval</div>
+
                 {% elif order.status == 'CLOSED' %}
-                    <span>Order Completed</span>
+                    <div class="status-text">Order Completed</div>
                 {% endif %}
             </div>
         {% empty %}
-            <p>You have no active orders yet.</p>
+            <p style="text-align:center; color:#94a3b8;">You have no active orders yet.</p>
         {% endfor %}
-    </section>
+
+    </div>
+
+</div>
+
 </body>
 </html>
