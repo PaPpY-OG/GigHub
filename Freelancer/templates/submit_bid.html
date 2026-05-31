@@ -1,65 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Submit Bid</title>
+{% extends 'based.html' %}
 
+{% block title %}Submit Bid - GigHub{% endblock %}
+
+{% block css %}
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        body {
-            background: #0f172a;
-            color: white;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .brand {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        .brand span {
-            color: #38bdf8;
-        }
-
-        .nav a {
-            display: block;
-            padding: 12px;
-            margin-bottom: 8px;
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .nav a:hover {
-            background: rgba(56,189,248,0.2);
-            color: #38bdf8;
-        }
-
         /* MAIN */
-        .main {
-            flex: 1;
-            padding: 30px;
-        }
-
         .card {
             max-width: 500px;
             margin: 0 auto;
@@ -121,32 +66,10 @@
 
         .error { color: #ff6b6b; }
         .success { color: #38bdf8; }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-        }
     </style>
-</head>
+{% endblock %}
 
-<body>
-
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="brand">Gig<span>Hub</span></div>
-
-    <div class="nav">
-        <a href="{% url 'freelancer_dash' %}">Dashboard</a>
-        <a href="{% url 'Fprofile_page' %}">Profile</a>
-        <a href="{% url 'active_gigs' %}">Active Gigs</a>
-        <a href="{% url 'my_bids' %}">My Bids</a>
-        <a href="{% url 'freelancer_orders' %}">Orders</a>
-        <a href="{% url 'message_view' %}">Inbox</a>
-        <a href="{% url 'freelancer_logout' %}">Logout</a>
-    </div>
-</div>
-
+{% block content %}
 <!-- MAIN -->
 <div class="main">
 
@@ -160,9 +83,12 @@
 
     <div class="card">
 
-        <h2>Submit Bid</h2>
+        <h2>Submit Bid for</h2>
         <p style="text-align:center; color:#94a3b8; margin-bottom:15px;">
             {{ gig.title }}
+        </p>
+        <p style="text-align:center; color:#94a3b8; margin-bottom:15px;"> Budget :
+            {{ gig.budget_min }} - {{ gig.budget_max }}
         </p>
 
         <form method="POST">
@@ -179,10 +105,6 @@
 
             <button type="submit">Submit Bid</button>
         </form>
-
     </div>
-
 </div>
-
-</body>
-</html>
+{% endblock %}

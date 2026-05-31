@@ -1,0 +1,181 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+  display: flex;
+  min-height: 100vh;
+}
+.main {
+  flex: 1;
+  padding: 30px;
+}
+.menu-icon {
+  font-size: 28px;
+  cursor: pointer;
+  padding: 10px;
+  color: #38bdf8;
+}
+/* Shared sidebar look */
+.sidebar {
+  display: none;
+  width: 240px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+/* Desktop */* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+  display: flex;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 10px;
+  color: #38bdf8;
+}
+
+/* Class added by JS */
+.menu-icon.hidden {
+  display: none !important;
+}
+
+/* Shared sidebar look */
+.sidebar {
+  display: none;
+  width: 240px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.brand span {
+  color: #38bdf8;
+}
+
+.nav a {
+  display: block;
+  padding: 12px;
+  margin-bottom: 8px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.nav a:hover {
+  background: rgba(56,189,248,0.2);
+  color: #38bdf8;
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .sidebar {
+    display: block;
+    position: relative;
+    transform: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .main {
+    padding-top: 60px; /* creates space for the fixed menu icon */
+  }
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  .mobile-header .menu-icon {
+    position: static;   /* no longer fixed */
+    margin-right: 15px;
+  }
+  .mobile-header h1 {
+    margin: 0;
+    font-size: 22px;
+  }
+  .menu-icon {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+  }
+
+  .sidebar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+}
+@media (min-width: 769px) {
+  .sidebar {
+    display: block;   /* always visible on large screens */
+    position: relative;
+    transform: none;  /* no slide effect */
+  }
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.brand span {
+  color: #38bdf8;
+}
+
+.nav a {
+  display: block;
+  padding: 12px;
+  margin-bottom: 8px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.nav a:hover {
+  background: rgba(56,189,248,0.2);
+  color: #38bdf8;
+}

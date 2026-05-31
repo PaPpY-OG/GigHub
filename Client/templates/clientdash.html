@@ -1,65 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Client Dashboard — GigHub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% block title %}Dashboard - GigHub{% endblock %}
+<!-- {% block header %}Dashboard{% endblock %} -->
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      background: #0f172a;
-      color: white;
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 240px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-right: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .brand {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-
-    .brand span {
-      color: #38bdf8;
-    }
-
-    .nav a {
-      display: block;
-      padding: 12px;
-      margin-bottom: 8px;
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
-
-    .nav a:hover {
-      background: rgba(56,189,248,0.2);
-      color: #38bdf8;
-    }
-
+{% block css %}
+    <style>
     /* MAIN */
-    .main {
-      flex: 1;
-      padding: 30px;
-    }
-
     .topbar {
       margin-bottom: 30px;
     }
@@ -141,35 +86,11 @@
     .btn:hover {
       background: #0ea5e9;
     }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        display: none;
-      }
-    }
   </style>
-</head>
+{% endblock %}
 
-<body>
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="brand">Gig<span>Hub</span></div>
-
-    <div class="nav">
-      <a href="{% url 'profile_page' %}">Profile</a>
-      <a href="{% url 'createGig' %}">Post Gig</a>
-      <a href="{% url 'viewGig' %}">My Gigs</a>
-      <a href="{% url 'inbox_view' %}">Inbox</a>
-      <a href="{% url 'client_orders' %}">Orders</a>
-      <a href="{% url 'client_reviews' %}">Reviews</a>
-      <a href="{% url 'client_logout' %}">Logout</a>
-    </div>
-  </div>
-
+{% block content %}
   <!-- MAIN -->
-  <div class="main">
-
     <div class="topbar">
       <h1>Welcome, <span>{{ user.username|upper }}</span></h1>
     </div>
@@ -198,8 +119,4 @@
         <p>No recent bids yet.</p>
       {% endfor %}
     </div>
-
-  </div>
-
-</body>
-</html>
+{% endblock %}

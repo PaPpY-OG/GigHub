@@ -1,66 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>My Orders — GigHub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
 
+{% block title %}My Orders — GigHub{% endblock %}
+
+{% block css %}
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      display: flex;
-      min-height: 100vh;
-      background: #0f172a;
-      color: white;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 240px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(255,255,255,0.1);
-      padding: 20px;
-    }
-
-    .brand {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-
-    .brand span {
-      color: #38bdf8;
-    }
-
-    .nav a {
-      display: block;
-      padding: 12px;
-      margin-bottom: 8px;
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      border-radius: 8px;
-      transition: 0.3s;
-      font-size: 14px;
-    }
-
-    .nav a:hover {
-      background: rgba(56,189,248,0.2);
-      color: #38bdf8;
-    }
-
     /* MAIN */
-    .main {
-      flex: 1;
-      padding: 30px;
-    }
-
     .title {
       font-size: 26px;
       margin-bottom: 20px;
@@ -152,32 +96,10 @@
       font-size: 14px;
       margin-top: 20px;
     }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        display: none;
-      }
-    }
   </style>
-</head>
+{% endblock %}
 
-<body>
-
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="brand">Gig<span>Hub</span></div>
-
-  <div class="nav">
-    <a href="{% url 'client_dash' %}">Dashboard</a>
-    <a href="{% url 'profile_page' %}">Profile</a>
-    <a href="{% url 'createGig' %}">Post Gig</a>
-    <a href="{% url 'viewGig' %}">My Gigs</a>
-    <a href="{% url 'inbox_view' %}">Inbox</a>
-    <a href="{% url 'client_reviews' %}">Reviews</a>
-    <a href="{% url 'client_logout' %}">Logout</a>
-  </div>
-</div>
-
+{% block content %}
 <!-- MAIN -->
 <div class="main">
 
@@ -232,8 +154,5 @@
   {% else %}
     <p class="empty">You have no active orders yet.</p>
   {% endif %}
-
 </div>
-
-</body>
-</html>
+{% endblock %}

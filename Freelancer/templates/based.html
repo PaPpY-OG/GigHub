@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}GigHub{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" href="{% static 'images/logo.png' %}">
+  {% block css %} {% endblock %}
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <div class="sidebar">
+    <div class="brand">Gig<span>Hub</span></div>
+    <div class="nav">
+        <a href="{% url 'freelancer_dash' %}">Dashboard</a>
+        <a href="{% url 'Fprofile_page' %}">Profile</a>
+        <a href="{% url 'active_gigs' %}">Active Gigs</a>
+        <a href="{% url 'my_bids' %}">My Bids</a>
+        <a href="{% url 'freelancer_orders' %}">Orders</a>
+        <a href="{% url 'message_view' %}">Inbox</a>
+        <a href="{% url 'freelancer_reviews' %}">Reviews</a>
+        <a href="{% url 'freelancer_logout' %}">Logout</a>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    {% block content %}{% endblock %}
+  </div>
+  <script src="{% static 'js/base.js' %}"></script>
+</body>
+</html>
